@@ -27,7 +27,7 @@ public class LoginServlet extends HttpServlet {
 
 			request.setAttribute("name", name);
 			response.setContentType("text/html; charset=utf-8");
-			RequestDispatcher rd = sc.getRequestDispatcher("/Welcome.jsp");
+			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/Welcome.jsp");
 			rd.forward(request, response);
 
 		}else{
