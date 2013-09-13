@@ -18,11 +18,11 @@ public class LoginServlet extends HttpServlet {
 		if((id.equals("itou")) && (password.equals("itou")))
 		{
 			String name = "伊藤";
-			response.sendRedirect(name);
+			response.sendRedirect("http://localhost:8080/Login/Welcome.jsp");
 
 		}else{
 
-
+			response.sendRedirect("http://localhost:8080/Login/login.jsp");
 		}
 	}
 }

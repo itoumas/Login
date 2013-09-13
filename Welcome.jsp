@@ -11,7 +11,7 @@
 <body>
 <section class = "sec">
 
-	<p1>Welcome</p1>
+	<p1>Welcome</p1><br>
 
 	<span>さん、ようこそ！！</span>
 
