@@ -38,7 +38,7 @@ public class LoginServlet extends HttpServlet {
 
 		try{
 
-			//JDBCをロード
+			//JDBCへロード
 			Class.forName("com.mysql.jdbc.Driver");
 
 			//MySQLへアクセス
