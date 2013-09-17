@@ -1,7 +1,10 @@
 package servlet;
 
+import java.sql.Statement;
 import java.io.*;
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.naming.InitialContext;
@@ -18,6 +21,14 @@ public class LoginServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		//MySQLにアクセスするためのユーザ名、パスワード、URL
+		String user = "root";
+		String pass = "Systena";
+		String url = "jdbc:mysql://db.systena_db.co.jp:3306/systena_db?useUnicode=true&characterEncoding=UTF-8";
+
+		String query = "SELECT * FROM USER";
+
+		//JSPから受け取ったIDとパスワード
 		String id = request.getParameter("id");
 		String password = request.getParameter("password");
 
@@ -27,7 +38,15 @@ public class LoginServlet extends HttpServlet {
 
 		try{
 
+			//JDBCのロード
 			Class.forName("com.mysql.jdbc.Driver");
+
+			//MySQLへアクセス
+			Connection con = DriverManager.getConnection(url, user, pass);
+
+			//SELECTの結果
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
 
 /*
 			//JNDI参照コンテキストを取得
@@ -43,7 +62,7 @@ public class LoginServlet extends HttpServlet {
 			{
 				String name = "伊藤";
 
-				request.setAttribute("name", name);
+				request.setAttribute("name", rs);
 				response.setContentType("text/html; charset=utf-8");
 				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/Welcome.jsp");
 				rd.forward(request, response);
