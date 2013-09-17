@@ -26,7 +26,7 @@ public class LoginServlet extends HttpServlet {
 		//MySQLにアクセスするためのユーザ名、パスワード、URL
 		String user = "systena";
 		String pass = "systena";
-		String url = "jdbc:mysql://10.10.14.162:3306/systena_db?useUnicode=true&characterEncoding=UTF-8";
+		String url = "jdbc:mysql://10.10.14.162:3306/systenaDB?useUnicode=true&characterEncoding=UTF-8";
 
 		//JSPから受け取ったIDとパスワード
 		String id = request.getParameter("id");
@@ -47,7 +47,9 @@ public class LoginServlet extends HttpServlet {
 
 			//SELECTの結果
 
-			String query = "select NAME from USER where ID = " + id + " and PASSWORD = " + password;
+			String query = "select NAME from USER where ID = " + id + " and PASSWORD = '" + password + "'";
+
+			log("クエリ" + query);
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
@@ -56,6 +58,8 @@ public class LoginServlet extends HttpServlet {
 			{
 //				String name = "伊藤";
 				String name = rs.getString("NAME");
+
+				log("名前" + name);
 
 				request.setAttribute("name", name);
 				response.setContentType("text/html; charset=utf-8");
