@@ -16,17 +16,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import sun.rmi.runtime.Log;
+
 public class LoginServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		//MySQLにアクセスするためのユーザ名、パスワード、URL
-		String user = "root";
-		String pass = "Systena";
+		String user = "systena";
+		String pass = "systena";
 		String url = "jdbc:mysql://10.10.14.162:3306/systena_db?useUnicode=true&characterEncoding=UTF-8";
-
-		String query = "SELECT * FROM USER";
 
 		//JSPから受け取ったIDとパスワード
 		String id = request.getParameter("id");
@@ -37,32 +37,25 @@ public class LoginServlet extends HttpServlet {
 		Connection connection = null;
 
 		try{
+			log("パスワード" + password);
 
 			//JDBCへロード
 			Class.forName("com.mysql.jdbc.Driver");
 
-/*
 			//MySQLへアクセス
 			Connection con = DriverManager.getConnection(url, user, pass);
 
 			//SELECTの結果
+
+			String query = "select NAME from USER where ID = " + id + " and PASSWORD = " + password;
+
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
-*/
-/*
-			//JNDI参照コンテキストを取得
-			InitialContext initCtx = new InitialContext();
 
-			//Tomcatで管理されているDB接続をJNDI経由で取得
-			DataSource ds = (DataSource) initCtx.lookup("java:comp/env/jbdc/localDB");
-			connection = ds.getConnection();
-
-			log("DBに接続しました");
-*/
-
-			if((id.equals("itou")) && (password.equals("itou")))
+			if((id.equals("1")) && (password.equals("itou")))
 			{
-				String name = "伊藤";
+//				String name = "伊藤";
+				String name = rs.getString("NAME");
 
 				request.setAttribute("name", name);
 				response.setContentType("text/html; charset=utf-8");
@@ -74,12 +67,12 @@ public class LoginServlet extends HttpServlet {
 				String errerMessage = "ログインできません";
 
 				request.setAttribute("errerMessage", errerMessage);
-				RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
 				response.setContentType("text/html; charset=utf-8");
+				RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
 				rd.forward(request, response);
 			}
 
-//			rs.close();
+			rs.close();
 
 		} catch (Exception e){
 
