@@ -10,13 +10,25 @@
 </head>
 <body>
 <section class = "sec">
+
 	<div class = "text">ログイン</div><br>
 
 	<form method = "post" action = "http://localhost:8080/Login/login_servlet">
 
 		<input type = "text" name = "id" /><span>ID</span><br>
 		<input type = "text" name = "password" /><span>Pass</span><br>
+
+		<%
+			Object message = request.getAttribute("errerMessage");
+			if(message == null) {
+
+				message = "";
+			}
+		%>
+
 		<input type = "submit" value = "Login" />
+
+		<p><%= message %></p>
 
 	</form>
 
