@@ -24,7 +24,7 @@ public class LoginServlet extends HttpServlet {
 		//MySQLにアクセスするためのユーザ名、パスワード、URL
 		String user = "root";
 		String pass = "Systena";
-		String url = "jdbc:mysql://db.systena_db.co.jp:3306/systena_db?useUnicode=true&characterEncoding=UTF-8";
+		String url = "jdbc:mysql://http://localhost:3306/systena_db?useUnicode=true&characterEncoding=UTF-8";
 
 		String query = "SELECT * FROM USER";
 
@@ -38,7 +38,7 @@ public class LoginServlet extends HttpServlet {
 
 		try{
 
-			//JDBCのロード
+			//JDBCをロード
 			Class.forName("com.mysql.jdbc.Driver");
 
 			//MySQLへアクセス
