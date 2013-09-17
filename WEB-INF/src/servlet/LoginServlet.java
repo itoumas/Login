@@ -37,10 +37,11 @@ public class LoginServlet extends HttpServlet {
 		Connection connection = null;
 
 		try{
-/*
+
 			//JDBCへロード
 			Class.forName("com.mysql.jdbc.Driver");
 
+/*
 			//MySQLへアクセス
 			Connection con = DriverManager.getConnection(url, user, pass);
 
@@ -58,6 +59,7 @@ public class LoginServlet extends HttpServlet {
 
 			log("DBに接続しました");
 */
+
 			if((id.equals("itou")) && (password.equals("itou")))
 			{
 				String name = "伊藤";
