@@ -23,6 +23,7 @@
 		<input type = "submit" value = "Insert"  name = "btn" />
 		<input type = "submit" value = "Update"  name = "btn" />
 	</form>
+
 </section>
 </body>
 </html>
