@@ -4,6 +4,7 @@ import java.sql.Statement;
 import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -45,13 +46,21 @@ public class LoginServlet extends HttpServlet {
 			//MySQLへアクセス
 			Connection con = DriverManager.getConnection(url, user, pass);
 
-			//SELECTの結果
-			String query = "select NAME from USER where ID = " + id + " and PASSWORD = '" + password + "'";
+			//プレースホルダーを指定してSQLを作成
+			String query = "select NAME from USER where ID = ? and PASSWORD = ?";
+
+			PreparedStatement pstmt = con.prepareStatement(query);
+
+			//パラメータセット
+			pstmt.setString(1, id);
+			pstmt.setString(2, password);
+
+			ResultSet rs = pstmt.executeQuery();
 
 			log("クエリ" + query);
 
-			Statement stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
+//			Statement stmt = con.createStatement();
+//			ResultSet rs = stmt.executeQuery(query);
 
 			if(rs.next())
 			{
@@ -75,6 +84,7 @@ public class LoginServlet extends HttpServlet {
 			}
 
 			rs.close();
+			pstmt.close();
 
 		} catch (Exception e){
 
