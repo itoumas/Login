@@ -10,12 +10,19 @@
 </head>
 <body>
 <section class = "sec">
-
 	<p1>Welcome</p1><br>
 
 	<%= request.getAttribute("name") %><span>さん、ようこそ！！</span>
 
-</section>
+	<form method = "post" action = "http://localhost:8080/Login/edit_date">
+		<input type = "text" name = "id" /><span>ID</span><br>
+		<input type = "text" name = "name" /><span>名前</span><br>
+		<input type = "text" name = "password" /><span>パスワード</span><br>
 
+		<input type = "submit" value = "削除" />
+		<input type = "submit" value = "追加" />
+		<input type = "submit" value = "更新" />
+	</form>
+</section>
 </body>
 </html>

@@ -59,16 +59,13 @@ public class LoginServlet extends HttpServlet {
 
 			log("クエリ" + query);
 
-//			Statement stmt = con.createStatement();
-//			ResultSet rs = stmt.executeQuery(query);
-
 			if(rs.next())
 			{
-				String name = rs.getString("NAME");
+				String getName = rs.getString("NAME");
 
-				log("名前" + name);
+				log("名前" + getName);
 
-				request.setAttribute("name", name);
+				request.setAttribute("name", getName);
 				response.setContentType("text/html; charset=utf-8");
 				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/Welcome.jsp");
 				rd.forward(request, response);
