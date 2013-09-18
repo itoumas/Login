@@ -19,9 +19,9 @@
 		<input type = "text" name = "name" /><span>名前</span><br>
 		<input type = "text" name = "password" /><span>パスワード</span><br>
 
-		<input type = "submit" value = "削除" />
-		<input type = "submit" value = "追加" />
-		<input type = "submit" value = "更新" />
+		<input type = "submit" value = "Delete"  name = "btn" />
+		<input type = "submit" value = "Insert"  name = "btn" />
+		<input type = "submit" value = "Update"  name = "btn" />
 	</form>
 </section>
 </body>
