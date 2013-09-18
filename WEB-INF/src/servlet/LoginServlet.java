@@ -46,7 +46,6 @@ public class LoginServlet extends HttpServlet {
 			Connection con = DriverManager.getConnection(url, user, pass);
 
 			//SELECTの結果
-
 			String query = "select NAME from USER where ID = " + id + " and PASSWORD = '" + password + "'";
 
 			log("クエリ" + query);
@@ -54,9 +53,8 @@ public class LoginServlet extends HttpServlet {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 
-			if((id.equals("1")) && (password.equals("itou")))
+			if(rs.next())
 			{
-//				String name = "伊藤";
 				String name = rs.getString("NAME");
 
 				log("名前" + name);
@@ -80,7 +78,7 @@ public class LoginServlet extends HttpServlet {
 
 		} catch (Exception e){
 
-//			throw new ServletException(e);
+			throw new ServletException(e);
 
 		}finally{
 /*
