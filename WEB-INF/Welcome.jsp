@@ -16,6 +16,7 @@
 
 	<form method = "post" action = "http://localhost:8080/Login/edit_date">
 		<input type = "text" name = "id" /><span>ID</span><br>
+		<input type = "text" name = "user_id" /><span>ユーザID</span><br>
 		<input type = "text" name = "name" /><span>名前</span><br>
 		<input type = "text" name = "password" /><span>パスワード</span><br>
 

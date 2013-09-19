@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 import sun.rmi.runtime.Log;
@@ -30,7 +31,7 @@ public class LoginServlet extends HttpServlet {
 		String url = "jdbc:mysql://10.10.14.162:3306/systenaDB?useUnicode=true&characterEncoding=UTF-8";
 
 		//JSPから受け取ったIDとパスワード
-		String id = request.getParameter("id");
+		String user_id = request.getParameter("user_id");
 		String password = request.getParameter("password");
 
 		ServletContext sc = getServletContext();
@@ -38,6 +39,7 @@ public class LoginServlet extends HttpServlet {
 		Connection connection = null;
 
 		try{
+			log("ID:" + user_id);
 			log("パスワード" + password);
 
 			//JDBCへロード
@@ -47,12 +49,12 @@ public class LoginServlet extends HttpServlet {
 			Connection con = DriverManager.getConnection(url, user, pass);
 
 			//プレースホルダーを指定してSQLを作成
-			String query = "select NAME from USER where ID = ? and PASSWORD = ?";
+			String query = "select NAME from USER where USER_ID = ? and PASSWORD = ?";
 
 			PreparedStatement pstmt = con.prepareStatement(query);
 
 			//パラメータセット
-			pstmt.setString(1, id);
+			pstmt.setString(1, user_id);
 			pstmt.setString(2, password);
 
 			ResultSet rs = pstmt.executeQuery();
@@ -64,7 +66,13 @@ public class LoginServlet extends HttpServlet {
 				String getName = rs.getString("NAME");
 
 				log("名前" + getName);
-
+/*
+				HttpSession session = request.getSession(false);
+				if (session == null){
+					//セッションが存在しないので開始する
+					session = request.getSession(true);
+				}
+*/
 				request.setAttribute("name", getName);
 				response.setContentType("text/html; charset=utf-8");
 				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/Welcome.jsp");
