@@ -23,6 +23,8 @@ public class EditDate  extends HttpServlet {
 		String pass = "systena";
 		String url = "jdbc:mysql://10.10.14.162:3306/systenaDB?useUnicode=true&characterEncoding=UTF-8";
 
+		request.setCharacterEncoding("UTF-8");
+
 		//JSPから受け取ったIDとパスワード
 		String id = request.getParameter("id");
 		String user_id = request.getParameter("user_id");
