@@ -12,11 +12,16 @@ public class EditAction {
 	String pass = "systena";
 	String url = "jdbc:mysql://10.10.14.162:3306/systenaDB?useUnicode=true&characterEncoding=UTF-8";
 
-	public String edit(String id, String user_id, String name, String password, String btn) {
+	//データの編集が失敗した場合のメッセージ
+	static final String DELTE_MESSAGE = "削除できませんでした";
+	static final String UPDATE_MESSAGE = "更新できませんでした";
+	static final String OK_MESSAGE = "完了！！";
+
+	public String edit (String id, String user_id, String name, String password, String btn) throws Exception {
 
 		Connection connection = null;
 
-		try{
+		try {
 			//JDBCをロード
 			Class.forName("com.mysql.jdbc.Driver");
 
@@ -24,7 +29,7 @@ public class EditAction {
 			Connection con = DriverManager.getConnection(url, user, pass);
 
 			//データを削除処理
-			if(btn.equals("Delete")){
+			if (btn.equals("Delete")) {
 
 				String query = "delete from USER where ID = ?";
 
@@ -33,12 +38,18 @@ public class EditAction {
 				//パラメータセット
 				pstmt.setString(1, id);
 
-				pstmt.executeUpdate();
+				int rs = pstmt.executeUpdate();
+
+				//指定されたIDにデータがなかった場合は削除失敗のメッセージを送る
+				if(rs == 0){
+
+					return DELTE_MESSAGE;
+				}
 
 				pstmt.close();
 
 			//データの追加処理
-			}else if(btn.equals("Insert")){
+			} else if(btn.equals("Insert")) {
 
 				String query = "insert into USER(USER_ID, NAME, PASSWORD) values (?, ?, ?)";
 
@@ -54,7 +65,7 @@ public class EditAction {
 				pstmt.close();
 
 			//データの更新処理
-			}else if(btn.equals("Update")){
+			} else if(btn.equals("Update")) {
 
 				String query = "update USER set USER_ID = ? , NAME = ? , PASSWORD = ? where ID = ?";
 
@@ -66,27 +77,34 @@ public class EditAction {
 				pstmt.setString(3, password);
 				pstmt.setString(4, id);
 
-				pstmt.executeUpdate();
+				int rs = pstmt.executeUpdate();
+
+				//指定されたIDにデータがなかった場合は更新失敗のメッセージを送る
+				if (rs == 0) {
+
+					return UPDATE_MESSAGE;
+				}
 
 				pstmt.close();
 			}
 
-		}catch (Exception e){
+		} catch (Exception e) {
 
 
-		}finally{
+		} finally {
 
-		try{
-			if(connection != null){
+		try {
+			if (connection != null) {
 
 				connection.close();
 			}
 
-			}catch (SQLException e){
+			} catch (SQLException e){
 
 			}
 
 		}
-		return btn;
+
+		return OK_MESSAGE;
 	}
 }

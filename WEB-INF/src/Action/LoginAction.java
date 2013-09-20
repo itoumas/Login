@@ -9,9 +9,9 @@ import java.sql.SQLException;
 public class LoginAction{
 
 	//ログインできなかった場合の戻り値
-	static final String NOTLOGIN = "notLogin";
+	public static final String NOT_LOGIN = "notLogin";
 
-	public String userLogin(String user_id, String password) throws SQLException {
+	public String userLogin (String user_id, String password) throws Exception {
 
 		//MySQLにアクセスするためのユーザ名、パスワード、URL
 		String user = "systena";
@@ -20,7 +20,8 @@ public class LoginAction{
 
 		Connection connection = null;
 
-		try{
+		try {
+
 			//JDBCをロード
 			Class.forName("com.mysql.jdbc.Driver");
 
@@ -38,29 +39,29 @@ public class LoginAction{
 
 			ResultSet rs = pstmt.executeQuery();
 
-			if(rs.next())
-			{
+			if (rs.next()) {
+
 				return rs.getString("NAME");
 
-			}else{
+			} else {
 
-				return NOTLOGIN;
+				return NOT_LOGIN;
 
 			}
 
-		}catch (Exception e){
+		} catch (Exception e) {
 
 			throw new SQLException(e);
 
-		}finally{
+		} finally {
 
-			try{
-				if(connection != null){
+			try {
+				if (connection != null) {
 
 					connection.close();
 				}
 
-			}catch (SQLException e){
+			} catch (SQLException e) {
 
 			}
 		}

@@ -1,8 +1,6 @@
 package servlet;
 
 import java.io.*;
-import java.sql.SQLException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -15,10 +13,7 @@ import Action.LoginAction;
 
 public class LoginServlet extends HttpServlet {
 
-	//ログインできたかの判断に使用
-	static final String NOTLOGIN = "notLogin";
-
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
+	public void doPost (HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		//JSPから受け取ったIDとパスワード
@@ -32,14 +27,14 @@ public class LoginServlet extends HttpServlet {
 		try {
 			String getResponse = loginAction.userLogin(user_id, password);
 
-			if(getResponse.equals(NOTLOGIN)){
+			if (getResponse.equals(LoginAction.NOT_LOGIN)) {
 
 				request.setAttribute("errerMessage", getResponse);
 				response.setContentType("text/html; charset=utf-8");
 				RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
 				rd.forward(request, response);
 
-			}else{
+			} else {
 
 				//ログインに成功したのでセッションを開始する
 				HttpSession session = request.getSession(true);
@@ -53,7 +48,7 @@ public class LoginServlet extends HttpServlet {
 				rd.forward(request, response);
 			}
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 
 			e.printStackTrace();
 		}

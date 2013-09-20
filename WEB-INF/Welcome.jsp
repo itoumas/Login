@@ -25,6 +25,16 @@
 		<input type = "submit" value = "Update"  name = "btn" />
 	</form>
 
+	<%
+		Object message = request.getAttribute("message");
+		if(message == null) {
+
+			message = "";
+		}
+	%>
+
+	<p><%= message %></p>
+
 </section>
 </body>
 </html>
