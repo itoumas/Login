@@ -12,7 +12,7 @@ public class EditAction {
 	String pass = "systena";
 	String url = "jdbc:mysql://10.10.14.162:3306/systenaDB?useUnicode=true&characterEncoding=UTF-8";
 
-	public void edit(String id, String user_id, String name, String password, String btn) {
+	public String edit(String id, String user_id, String name, String password, String btn) {
 
 		Connection connection = null;
 
@@ -85,6 +85,8 @@ public class EditAction {
 			}catch (SQLException e){
 
 			}
+
 		}
+		return btn;
 	}
 }
