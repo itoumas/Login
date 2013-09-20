@@ -11,7 +11,7 @@ public class LoginAction{
 	//ログインできなかった場合の戻り値
 	static final String NOTLOGIN = "notLogin";
 
-	public String userLogin(String user_id, String password) throws SQLException {
+	public String userLogin(String user_id, String password) throws Exception {
 
 		//MySQLにアクセスするためのユーザ名、パスワード、URL
 		String user = "systena";
@@ -20,8 +20,9 @@ public class LoginAction{
 
 		Connection connection = null;
 
-		try{
-			//JDBCをロード
+		try {
+
+		    //JDBCをロード
 			Class.forName("com.mysql.jdbc.Driver");
 
 			//MySQLへアクセス
@@ -40,7 +41,8 @@ public class LoginAction{
 
 			if(rs.next())
 			{
-				return rs.getString("NAME");
+
+			    return rs.getString("NAME");
 
 			}else{
 
@@ -48,21 +50,15 @@ public class LoginAction{
 
 			}
 
-		}catch (Exception e){
-
-			throw new SQLException(e);
-
-		}finally{
+		} finally {
 
 			try{
 				if(connection != null){
-
 					connection.close();
 				}
-
 			}catch (SQLException e){
-
 			}
+
 		}
 	}
 }
