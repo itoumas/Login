@@ -36,12 +36,10 @@ public class LoginServlet extends HttpServlet {
 
 		ServletContext sc = getServletContext();
 
-		Connection connection = null;
+//		Connection connection = null;
 
 		LoginAction loginAction = new LoginAction();
-//		String getResponse = loginAction.userLogin(user_id, password);
-		String getResponse = "伊藤";
-
+		String getResponse = loginAction.userLogin(user_id, password);
 
 /*
 		try{
@@ -87,11 +85,33 @@ public class LoginServlet extends HttpServlet {
 
 				log("セッション:" + userName);
 */
-				request.setAttribute("name", getResponse);
-				response.setContentType("text/html; charset=utf-8");
-				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/Welcome.jsp");
-				rd.forward(request, response);
-/*
+		if(getResponse.equals("notLogin")){
+
+			HttpSession session = request.getSession(false);
+
+			//セッションが存在しないので開始する
+			session = request.getSession(true);
+
+			//セッションにデータを格納
+			session.setAttribute("userName", getResponse);
+
+			getResponse = (String)session.getAttribute("userName");
+
+			request.setAttribute("errerMessage", getResponse);
+			response.setContentType("text/html; charset=utf-8");
+			RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
+			rd.forward(request, response);
+
+		}else{
+
+			request.setAttribute("name", getResponse);
+			response.setContentType("text/html; charset=utf-8");
+			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/Welcome.jsp");
+			rd.forward(request, response);
+		}
+
+
+		/*
 			}else{
 
 				String errerMessage = "ログインできません";
