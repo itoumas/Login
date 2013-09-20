@@ -24,12 +24,12 @@ public class LoginServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+/*
 		//MySQLにアクセスするためのユーザ名、パスワード、URL
 		String user = "systena";
 		String pass = "systena";
 		String url = "jdbc:mysql://10.10.14.162:3306/systenaDB?useUnicode=true&characterEncoding=UTF-8";
-
+*/
 		//JSPから受け取ったIDとパスワード
 		String user_id = request.getParameter("user_id");
 		String password = request.getParameter("password");
@@ -38,6 +38,12 @@ public class LoginServlet extends HttpServlet {
 
 		Connection connection = null;
 
+		LoginAction loginAction = new LoginAction();
+//		String getResponse = loginAction.userLogin(user_id, password);
+		String getResponse = "伊藤";
+
+
+/*
 		try{
 			log("ID:" + user_id);
 			log("パスワード" + password);
@@ -80,12 +86,12 @@ public class LoginServlet extends HttpServlet {
 				String userName = (String)session.getAttribute("userName");
 
 				log("セッション:" + userName);
-
-				request.setAttribute("name", getName);
+*/
+				request.setAttribute("name", getResponse);
 				response.setContentType("text/html; charset=utf-8");
 				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/Welcome.jsp");
 				rd.forward(request, response);
-
+/*
 			}else{
 
 				String errerMessage = "ログインできません";
@@ -94,7 +100,8 @@ public class LoginServlet extends HttpServlet {
 				response.setContentType("text/html; charset=utf-8");
 				RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
 				rd.forward(request, response);
-			}
+*/
+/*			}
 
 			rs.close();
 			pstmt.close();
@@ -104,7 +111,7 @@ public class LoginServlet extends HttpServlet {
 			throw new ServletException(e);
 
 		}finally{
-/*
+
 			try{
 				connection.close();
 
@@ -114,8 +121,8 @@ public class LoginServlet extends HttpServlet {
 
 				throw new ServletException(e);
 			}
-*/
-		}
+
+		}*/
 	}
 }
 
