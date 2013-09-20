@@ -66,13 +66,21 @@ public class LoginServlet extends HttpServlet {
 				String getName = rs.getString("NAME");
 
 				log("名前" + getName);
-/*
+
 				HttpSession session = request.getSession(false);
-				if (session == null){
-					//セッションが存在しないので開始する
-					session = request.getSession(true);
-				}
-*/
+
+				//セッションが存在しないので開始する
+				session = request.getSession(true);
+
+				log("セッションを開始する");
+
+				//セッションにデータを格納
+				session.setAttribute("userName", getName);
+
+				String userName = (String)session.getAttribute("userName");
+
+				log("セッション:" + userName);
+
 				request.setAttribute("name", getName);
 				response.setContentType("text/html; charset=utf-8");
 				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/Welcome.jsp");

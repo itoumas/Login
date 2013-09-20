@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class EditDate  extends HttpServlet {
 
@@ -31,8 +32,24 @@ public class EditDate  extends HttpServlet {
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
 		String btn = request.getParameter("btn");
+//		String loginName = request.getParameter("loginName");
+
+//		log("ログイン用:" + loginName);
 
 		ServletContext sc = getServletContext();
+
+		//セッションから名前を取り出す
+		HttpSession session = request.getSession(false);
+
+		if (session == null){
+			response.setContentType("text/html; charset=utf-8");
+			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/login.jsp");
+			rd.forward(request, response);
+		}
+
+		String userName = (String)session.getAttribute("userName");
+
+		log("セッション:" + userName);
 
 		Connection connection = null;
 
@@ -92,7 +109,7 @@ public class EditDate  extends HttpServlet {
 			}
 
 			//もとのページに戻る
-//			request.setAttribute("name", message);
+			request.setAttribute("name", userName);
 			response.setContentType("text/html; charset=utf-8");
 			RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/Welcome.jsp");
 			rd.forward(request, response);
