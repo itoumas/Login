@@ -41,50 +41,6 @@ public class LoginServlet extends HttpServlet {
 		LoginAction loginAction = new LoginAction();
 		String getResponse = loginAction.userLogin(user_id, password);
 
-/*
-		try{
-			log("ID:" + user_id);
-			log("パスワード" + password);
-
-			//JDBCへロード
-			Class.forName("com.mysql.jdbc.Driver");
-
-			//MySQLへアクセス
-			Connection con = DriverManager.getConnection(url, user, pass);
-
-			//プレースホルダーを指定してSQLを作成
-			String query = "select NAME from USER where USER_ID = ? and PASSWORD = ?";
-
-			PreparedStatement pstmt = con.prepareStatement(query);
-
-			//パラメータセット
-			pstmt.setString(1, user_id);
-			pstmt.setString(2, password);
-
-			ResultSet rs = pstmt.executeQuery();
-
-			log("クエリ" + query);
-
-			if(rs.next())
-			{
-				String getName = rs.getString("NAME");
-
-				log("名前" + getName);
-
-				HttpSession session = request.getSession(false);
-
-				//セッションが存在しないので開始する
-				session = request.getSession(true);
-
-				log("セッションを開始する");
-
-				//セッションにデータを格納
-				session.setAttribute("userName", getName);
-
-				String userName = (String)session.getAttribute("userName");
-
-				log("セッション:" + userName);
-*/
 		if(getResponse.equals("notLogin")){
 
 			HttpSession session = request.getSession(false);
@@ -110,17 +66,6 @@ public class LoginServlet extends HttpServlet {
 			rd.forward(request, response);
 		}
 
-
-		/*
-			}else{
-
-				String errerMessage = "ログインできません";
-
-				request.setAttribute("errerMessage", errerMessage);
-				response.setContentType("text/html; charset=utf-8");
-				RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
-				rd.forward(request, response);
-*/
 /*			}
 
 			rs.close();
