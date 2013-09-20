@@ -11,8 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Action.LoginAction;
+
 public class LoginServlet extends HttpServlet {
 
+	//ログインできたかの判断に使用
 	static final String NOTLOGIN = "notLogin";
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -39,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 			}else{
 
 				//ログインに成功したのでセッションを開始する
-				HttpSession session = request.getSession(false);
+				HttpSession session = request.getSession(true);
 
 				//セッションにデータを格納
 				session.setAttribute("userName", getResponse);

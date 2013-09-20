@@ -1,4 +1,4 @@
-package servlet;
+package Action;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LoginAction{
+
+	//ログインできなかった場合の戻り値
+	static final String NOTLOGIN = "notLogin";
 
 	public String userLogin(String user_id, String password) throws SQLException {
 
@@ -18,7 +21,7 @@ public class LoginAction{
 		Connection connection = null;
 
 		try{
-			//JDBCへロード
+			//JDBCをロード
 			Class.forName("com.mysql.jdbc.Driver");
 
 			//MySQLへアクセス
@@ -41,7 +44,7 @@ public class LoginAction{
 
 			}else{
 
-				return "notLogin";
+				return NOTLOGIN;
 
 			}
 
