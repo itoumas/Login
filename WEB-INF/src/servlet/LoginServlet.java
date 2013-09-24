@@ -10,8 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Action.LoginAction;
+import DAO.ConnectDao;
 
 public class LoginServlet extends HttpServlet {
+
+	//ログインできなかった場合の戻り値
+	public static final String NOT_LOGIN = "notLogin";
 
 	public void doPost (HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -27,7 +31,7 @@ public class LoginServlet extends HttpServlet {
 		try {
 			String getResponse = loginAction.userLogin(user_id, password);
 
-			if (getResponse.equals(LoginAction.NOT_LOGIN)) {
+			if (getResponse.equals(ConnectDao.NOT_LOGIN)) {
 
 				request.setAttribute("errerMessage", getResponse);
 				response.setContentType("text/html; charset=utf-8");

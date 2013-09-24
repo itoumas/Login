@@ -1,53 +1,27 @@
 package Action;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
-public class LoginAction{
+import DAO.ConnectDao;
 
-	//ログインできなかった場合の戻り値
-	public static final String NOT_LOGIN = "notLogin";
+public class LoginAction {
 
 	public String userLogin (String user_id, String password) throws Exception {
 
-		//MySQLにアクセスするためのユーザ名、パスワード、URL
-		String user = "systena";
-		String pass = "systena";
-		String url = "jdbc:mysql://10.10.14.162:3306/systenaDB?useUnicode=true&characterEncoding=UTF-8";
-
-		Connection connection = null;
+		ConnectDao dao = null;
+		Connection con = null;
 
 		try {
+			//MySQLに接続
+			dao = new ConnectDao();
+			con = dao.Connect();
 
-			//JDBCをロード
-			Class.forName("com.mysql.jdbc.Driver");
-
-			//MySQLへアクセス
-			Connection con = DriverManager.getConnection(url, user, pass);
-
-			//プレースホルダーを指定してSQLを作成
-			String query = "select NAME from USER where USER_ID = ? and PASSWORD = ?";
-
-			PreparedStatement pstmt = con.prepareStatement(query);
-
-			//パラメータセット
-			pstmt.setString(1, user_id);
-			pstmt.setString(2, password);
-
-			ResultSet rs = pstmt.executeQuery();
-
-			if (rs.next()) {
-
-				return rs.getString("NAME");
-
-			} else {
-
-				return NOT_LOGIN;
-
-			}
+			//ID、パスワードでログイン
+			return dao.login(con, user_id, password);
 
 		} catch (Exception e) {
 
@@ -55,14 +29,9 @@ public class LoginAction{
 
 		} finally {
 
-			try {
-				if (connection != null) {
+			if (con != null) {
 
-					connection.close();
-				}
-
-			} catch (SQLException e) {
-
+				dao.Close(con);
 			}
 		}
 	}
