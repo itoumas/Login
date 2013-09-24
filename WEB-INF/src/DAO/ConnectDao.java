@@ -12,16 +12,17 @@ public class ConnectDao {
 	//ログインできなかった場合の戻り値
 	public static final String NOT_LOGIN = "notLogin";
 
-	public Connection Connect () {
+	//Connectionオブジェクトを格納
+	Connection con = null;
+
+	public void connect () {
 
 		//MySQLにアクセスするためのユーザ名、パスワード、URL
 		String user = "systena";
 		String pass = "systena";
 		String url = "jdbc:mysql://10.10.14.117:3306/systenaDB?useUnicode=true&characterEncoding=UTF-8";
 
-		Connection con = null;
-
-		 final Logger logger = Logger.getLogger(url);
+		 final Logger logger = Logger.getLogger("");
 		logger.info("DAOクラス");
 
 		try {
@@ -35,11 +36,9 @@ public class ConnectDao {
 
 			e.printStackTrace();
 		}
-
-		return con;
 	}
 
-	public void Close (Connection con) {
+	public void close () {
 
 		try {
 			con.close();
@@ -50,13 +49,19 @@ public class ConnectDao {
 		}
 	}
 
-	public String login (Connection con, String user_id, String password) {
-
+	//ログインメソッド
+	public String login (String user_id, String password) {
 
 		//プレースホルダーを指定してSQLを作成
 		String query = "select NAME from USER where USER_ID = ? and PASSWORD = ?";
 
+		final Logger logger = Logger.getLogger("");
+		logger.info(user_id);
+		logger.info(password);
+
 		try {
+			connect();
+
 			PreparedStatement pstmt = con.prepareStatement(query);
 
 			//パラメータセット
@@ -68,10 +73,6 @@ public class ConnectDao {
 			if (rs.next()) {
 
 				return rs.getString("NAME");
-
-			} else {
-
-				return NOT_LOGIN;
 			}
 
 		} catch (Exception e) {
@@ -79,8 +80,9 @@ public class ConnectDao {
 			e.printStackTrace();
 		}
 
-		return NOT_LOGIN;
+		close();
 
+		return NOT_LOGIN;
 	}
 
 }
