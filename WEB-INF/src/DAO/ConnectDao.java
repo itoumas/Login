@@ -21,6 +21,7 @@ public class ConnectDao {
 	//Connectionオブジェクトを格納
 	Connection con = null;
 
+	//DBに接続
 	public void connect () {
 
 		//MySQLにアクセスするためのユーザ名、パスワード、URL
@@ -44,6 +45,7 @@ public class ConnectDao {
 		}
 	}
 
+	//DBから切断
 	public void close () {
 
 		try {
@@ -118,6 +120,7 @@ public class ConnectDao {
 		} else {
 
 			return DELTE_MESSAGE;
+
 		}
 	}
 

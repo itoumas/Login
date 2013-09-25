@@ -8,26 +8,29 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import Action.EditAction;
+import Factory.Factory;
 
 public class EditDate extends HttpServlet {
 
 	public void doPost (HttpServletRequest request, HttpServletResponse response) {
 
-			//JSPから受け取ったIDとパスワード
-			String id = request.getParameter("id");
-			String user_id = request.getParameter("user_id");
-			String name = request.getParameter("name");
-			String password = request.getParameter("password");
-			String btn = request.getParameter("btn");
+		//JSPから受け取ったIDとパスワード
+		String id = request.getParameter("id");
+		String user_id = request.getParameter("user_id");
+		String name = request.getParameter("name");
+		String password = request.getParameter("password");
+		String btn = request.getParameter("btn");
 
 		try {
 			request.setCharacterEncoding("UTF-8");
 
 			ServletContext sc = getServletContext();
 
-			EditAction editAction = new EditAction();
+			//ファクトリ
+			Factory fact = new Factory();
+			EditAction editAction = fact.factory(btn);
 
-			String message =  editAction.edit(id, user_id, name, password, btn);
+			String message = editAction.edit(id, user_id, name, password);
 
 			//セッションから名前を取り出す
 			HttpSession session = request.getSession(false);
