@@ -12,6 +12,12 @@ public class ConnectDao {
 	//ログインできなかった場合の戻り値
 	public static final String NOT_LOGIN = "notLogin";
 
+	//データの編集が失敗した場合のメッセージ
+	static final String DELTE_MESSAGE = "削除できませんでした";
+	static final String UPDATE_MESSAGE = "更新できませんでした";
+
+	static final String OK_MESSAGE = "完了！！";
+
 	//Connectionオブジェクトを格納
 	Connection con = null;
 
@@ -62,7 +68,7 @@ public class ConnectDao {
 		try {
 			connect();
 
-			PreparedStatement pstmt = con.prepareStatement(query);
+			PreparedStatement pstmt = this.con.prepareStatement(query);
 
 			//パラメータセット
 			pstmt.setString(1, user_id);
@@ -78,11 +84,93 @@ public class ConnectDao {
 		} catch (Exception e) {
 
 			e.printStackTrace();
-		}
 
-		close();
+		} finally {
+
+			close();
+		}
 
 		return NOT_LOGIN;
 	}
 
+	public String delete (String id) throws Exception {
+
+		String query = "delete from USER where ID = ?";
+
+		connect();
+
+		//PreparedStatementで事前にSQLをコンパイルする
+		PreparedStatement pstmt = con.prepareStatement(query);
+
+		//パラメータセット
+		pstmt.setString(1, id);
+
+		int rs = pstmt.executeUpdate();
+
+		pstmt.close();
+		close();
+
+		//指定されたIDにデータがあった場合、正常に処理が完了したことを伝える
+		if(rs != 0){
+
+			return OK_MESSAGE;
+
+		} else {
+
+			return DELTE_MESSAGE;
+		}
+	}
+
+	public String insert (String user_id, String name, String password) throws Exception {
+
+		String query = "insert into USER(USER_ID, NAME, PASSWORD) values (?, ?, ?)";
+
+		connect();
+
+		PreparedStatement pstmt = con.prepareStatement(query);
+
+		//パラメータセット
+		pstmt.setString(1, user_id);
+		pstmt.setString(2, name);
+		pstmt.setString(3, password);
+
+		pstmt.executeUpdate();
+
+		pstmt.close();
+		close();
+
+		return OK_MESSAGE;
+	}
+
+	public String update (String id, String user_id, String name, String password) throws Exception {
+
+		connect();
+
+		String query = "update USER set USER_ID = ? , NAME = ? , PASSWORD = ? where ID = ?";
+
+		PreparedStatement pstmt = con.prepareStatement(query);
+
+		//パラメータセット
+		pstmt.setString(1, user_id);
+		pstmt.setString(2, name);
+		pstmt.setString(3, password);
+		pstmt.setString(4, id);
+
+		int rs = pstmt.executeUpdate();
+
+		pstmt.close();
+		close();
+
+		//指定されたIDにデータがなかった場合は更新失敗のメッセージを送る
+		if (rs != 0) {
+
+			return OK_MESSAGE;
+
+		} else {
+
+			return DELTE_MESSAGE;
+		}
+	}
 }
+
+
