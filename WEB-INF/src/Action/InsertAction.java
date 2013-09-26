@@ -1,7 +1,8 @@
-package DAO;
+package Action;
 
 import java.sql.Connection;
-import Action.EditAction;
+
+import DAO.Insert;
 
 public class InsertAction extends EditAction {
 

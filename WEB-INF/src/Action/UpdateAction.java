@@ -1,16 +1,17 @@
-package DAO;
+package Action;
 
 import java.sql.Connection;
-import Action.EditAction;
 
-public class DeleteAction extends EditAction {
+import DAO.Update;
+
+public class UpdateAction extends EditAction {
 
 	//Connectionオブジェクトを格納
 	Connection con = null;
 
 	public String edit (String id, String user_id, String name, String password) throws Exception {
 
-		Delete dao = new Delete();
+		Update dao = new Update();
 		return dao.execute(id, user_id, name, password);
 	}
 }

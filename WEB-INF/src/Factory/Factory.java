@@ -1,10 +1,10 @@
 
 package Factory;
 
+import Action.DeleteAction;
 import Action.EditAction;
-import DAO.DeleteAction;
-import DAO.InsertAction;
-import DAO.UpdateAction;
+import Action.InsertAction;
+import Action.UpdateAction;
 
 public class Factory {
 

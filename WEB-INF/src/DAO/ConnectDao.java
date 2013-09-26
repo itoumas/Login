@@ -17,7 +17,7 @@ public class ConnectDao {
 	/**
 	 * メッセージ。
 	 */
-	public static final String NOT_LOGIN = "notLogin";
+	public static final String NOT_LOGIN = "ログインできません";
 	static final String DELTE_MESSAGE = "削除できませんでした";
 	static final String INSERT_MESSAGE = "追加できませんでした";
 	static final String UPDATE_MESSAGE = "更新できませんでした";
@@ -88,7 +88,6 @@ public class ConnectDao {
 		connect();
 
 		try {
-
 			pstmt = this.con.prepareStatement(query);
 
 			//パラメータセット
@@ -112,7 +111,7 @@ public class ConnectDao {
 			close();
 		}
 
-		return NG_MESSAGE;
+		return NOT_LOGIN;
 	}
 
 	/**
@@ -126,6 +125,7 @@ public class ConnectDao {
 	 * @throws Exception
 	 */
 	protected PreparedStatement setupPstmt (String id, String user_id, String name, String password) throws Exception {
+
 		return null;
 	}
 
@@ -163,158 +163,6 @@ public class ConnectDao {
 		}
 
 		return NG_MESSAGE;
-	}
-
-
-/*-------------------------------------------------
-	main() {
-		Delete delete = new Delete();
-		delete.execute();
-	}
-
-
-	class Delete extends ConnectDao {
-		/**
-		 * プリペアドステートメントを準備します。
-		 *
-		 *
-		protected PreparedStatement setupPstmt(String id) throws Exception {
-			String query = "delete from USER where ID = ?";
-			PreparedStatement pstmt = con.prepareStatement(query);
-
-			//パラメータセット
-			pstmt.setString(1, id);
-			return pstmt;
-		}
-	}
-
-
-	/**
-	 * 処理を実行します。
-	 *
-	 *
-	 * @param id
-	 * @return
-	 * @throws Exception
-	 *
-	public String execute(String id, String user_id, String name, String password) throws Exception {
-
-		PreparedStatement pstmt = null;
-
-		connect();
-
-		try{
-
-			pstmt = setupPstmt(id);
-
-			int rs = pstmt.executeUpdate();
-			//指定されたIDにデータがあった場合、正常に処理が完了したことを伝える
-			if(rs != 0){
-
-				return OK_MESSAGE;
-			}
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-//			throw e;
-
-		} finally {
-
-			pstmt.close();
-			close();
-		}
-
-		return DELTE_MESSAGE;
-	}
-
-	protected PreparedStatement setupPstmt(String id) throws Exception {
-		return null;
-	}
-
-
- ------------------------------------------------- */
-
-
-	public String insert (String user_id, String name, String password) throws Exception {
-
-		PreparedStatement pstmt = null;
-
-		connect();
-
-		try {
-
-			String query = "insert into USER(USER_ID, NAME, PASSWORD) values (?, ?, ?)";
-			pstmt = con.prepareStatement(query);
-
-			//パラメータセット
-			pstmt.setString(1, user_id);
-			pstmt.setString(2, name);
-			pstmt.setString(3, password);
-
-			int rs = pstmt.executeUpdate();
-
-			pstmt.close();
-
-			if(rs != 0){
-
-				return OK_MESSAGE;
-			}
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-			throw e;
-
-		} finally {
-
-			pstmt.close();
-			close();
-		}
-
-		return INSERT_MESSAGE;
-
-	}
-
-	public String update (String id, String user_id, String name, String password) throws Exception {
-
-		String query = "update USER set USER_ID = ? , NAME = ? , PASSWORD = ? where ID = ?";
-		PreparedStatement pstmt = null;
-
-		connect();
-
-		try {
-			pstmt = con.prepareStatement(query);
-
-			//パラメータセット
-			pstmt.setString(1, user_id);
-			pstmt.setString(2, name);
-			pstmt.setString(3, password);
-			pstmt.setString(4, id);
-
-			int rs = pstmt.executeUpdate();
-
-			pstmt.close();
-			close();
-
-			//指定されたIDにデータがなかった場合は更新失敗のメッセージを送る
-			if (rs != 0) {
-
-				return OK_MESSAGE;
-			}
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-			throw e;
-
-		} finally {
-
-			pstmt.close();
-			close();
-		}
-
-		return DELTE_MESSAGE;
 	}
 }
 
