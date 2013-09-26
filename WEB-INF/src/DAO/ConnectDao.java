@@ -22,7 +22,7 @@ public class ConnectDao {
 	Connection con = null;
 
 	//DBに接続
-	public void connect () {
+	public void connect () throws Exception{
 
 		//MySQLにアクセスするためのユーザ名、パスワード、URL
 		String user = "systena";
@@ -42,6 +42,7 @@ public class ConnectDao {
 		} catch (Exception e) {
 
 			e.printStackTrace();
+			throw e;
 		}
 	}
 
@@ -58,10 +59,12 @@ public class ConnectDao {
 	}
 
 	//ログインメソッド
-	public String login (String user_id, String password) {
+	public String login (String user_id, String password) throws Exception {
 
 		//プレースホルダーを指定してSQLを作成
 		String query = "select NAME from USER where USER_ID = ? and PASSWORD = ?";
+
+		PreparedStatement pstmt = null;
 
 		final Logger logger = Logger.getLogger("");
 		logger.info(user_id);
@@ -70,7 +73,7 @@ public class ConnectDao {
 		try {
 			connect();
 
-			PreparedStatement pstmt = this.con.prepareStatement(query);
+			pstmt = this.con.prepareStatement(query);
 
 			//パラメータセット
 			pstmt.setString(1, user_id);
@@ -89,6 +92,7 @@ public class ConnectDao {
 
 		} finally {
 
+			pstmt.close();
 			close();
 		}
 
@@ -98,30 +102,36 @@ public class ConnectDao {
 	public String delete (String id) throws Exception {
 
 		String query = "delete from USER where ID = ?";
+		PreparedStatement pstmt = null;
 
-		connect();
+		try{
+			connect();
 
-		//PreparedStatementで事前にSQLをコンパイルする
-		PreparedStatement pstmt = con.prepareStatement(query);
+			//PreparedStatementで事前にSQLをコンパイルする
+			pstmt = con.prepareStatement(query);
 
-		//パラメータセット
-		pstmt.setString(1, id);
+			//パラメータセット
+			pstmt.setString(1, id);
 
-		int rs = pstmt.executeUpdate();
+			int rs = pstmt.executeUpdate();
+			//指定されたIDにデータがあった場合、正常に処理が完了したことを伝える
+			if(rs != 0){
 
-		pstmt.close();
-		close();
+				return OK_MESSAGE;
+			}
 
-		//指定されたIDにデータがあった場合、正常に処理が完了したことを伝える
-		if(rs != 0){
+		} catch (Exception e) {
 
-			return OK_MESSAGE;
+			e.printStackTrace();
+			throw e;
 
-		} else {
+		} finally {
 
-			return DELTE_MESSAGE;
-
+			pstmt.close();
+			close();
 		}
+
+		return DELTE_MESSAGE;
 	}
 
 	public String insert (String user_id, String name, String password) throws Exception {

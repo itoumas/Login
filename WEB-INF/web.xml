@@ -21,7 +21,7 @@
 
 	<servlet>
 		<servlet-name>edit_date</servlet-name>
-		<servlet-class>servlet.EditDate</servlet-class>
+		<servlet-class>servlet.EditServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>

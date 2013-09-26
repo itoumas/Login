@@ -10,38 +10,41 @@ import javax.servlet.http.HttpSession;
 import Action.EditAction;
 import Factory.Factory;
 
-public class EditDate extends HttpServlet {
+public class EditServlet extends HttpServlet {
 
-	public void doPost (HttpServletRequest request, HttpServletResponse response) {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) {
 
-		//JSPから受け取ったIDとパスワード
-		String id = request.getParameter("id");
-		String user_id = request.getParameter("user_id");
-		String name = request.getParameter("name");
-		String password = request.getParameter("password");
-		String btn = request.getParameter("btn");
-
-		try {
-			request.setCharacterEncoding("UTF-8");
-
+		try
+		{
 			ServletContext sc = getServletContext();
-
-			//ファクトリ
-			Factory fact = new Factory();
-			EditAction editAction = fact.factory(btn);
-
-			String message = editAction.edit(id, user_id, name, password);
 
 			//セッションから名前を取り出す
 			HttpSession session = request.getSession(false);
 
 			//セッションが生成されていない状態で処理を行おうとした場合、ログイン画面へ飛ばす
-			if (session == null) {
+			if ((session == null) || (session.getAttribute("userName") == null)) {
 
 				response.setContentType("text/html; charset=utf-8");
-				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/login.jsp");
+				RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
 				rd.forward(request, response);
+
+				return;
 			}
+
+			request.setCharacterEncoding("UTF-8");
+
+			//JSPから受け取ったIDとパスワード
+			String id = request.getParameter("id");
+			String user_id = request.getParameter("user_id");
+			String name = request.getParameter("name");
+			String password = request.getParameter("password");
+			String btn = request.getParameter("btn");
+
+			//DBの操作を行う(ビジネスロジック)
+			Factory fact = new Factory();
+			EditAction editAction = fact.factory(btn);
+
+			String message = editAction.edit(id, user_id, name, password);
 
 			//セッションに保存されたユーザ名をレスポンスと送るために取り出す
 			String userName = (String)session.getAttribute("userName");
