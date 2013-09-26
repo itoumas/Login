@@ -7,21 +7,30 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
+/**
+ * DB接続と各種DB処理を行う一般クラス。
+ *
+ * @author itoumas
+ */
 public class ConnectDao {
 
-	//ログインできなかった場合の戻り値
+	/**
+	 * メッセージ。
+	 */
 	public static final String NOT_LOGIN = "notLogin";
-
-	//データの編集が失敗した場合のメッセージ
 	static final String DELTE_MESSAGE = "削除できませんでした";
+	static final String INSERT_MESSAGE = "追加できませんでした";
 	static final String UPDATE_MESSAGE = "更新できませんでした";
-
 	static final String OK_MESSAGE = "完了！！";
 
 	//Connectionオブジェクトを格納
 	Connection con = null;
 
-	//DBに接続
+	/**
+	 * MySQLに接続します。
+	 *
+	 * @throws Exception
+	 */
 	public void connect () throws Exception{
 
 		//MySQLにアクセスするためのユーザ名、パスワード、URL
@@ -46,7 +55,9 @@ public class ConnectDao {
 		}
 	}
 
-	//DBから切断
+	/**
+	 * MySQLとの接続を切断します。
+	 */
 	public void close () {
 
 		try {
@@ -58,7 +69,14 @@ public class ConnectDao {
 		}
 	}
 
-	//ログインメソッド
+	/**
+	 * ログイン処理を行います。
+	 *
+	 * @param user_id
+	 * @param password
+	 * @return
+	 * @throws Exception
+	 */
 	public String login (String user_id, String password) throws Exception {
 
 		//プレースホルダーを指定してSQLを作成
@@ -66,12 +84,9 @@ public class ConnectDao {
 
 		PreparedStatement pstmt = null;
 
-		final Logger logger = Logger.getLogger("");
-		logger.info(user_id);
-		logger.info(password);
+		connect();
 
 		try {
-			connect();
 
 			pstmt = this.con.prepareStatement(query);
 
@@ -99,22 +114,147 @@ public class ConnectDao {
 		return NOT_LOGIN;
 	}
 
-	public String delete (String id) throws Exception {
+	/**
+	 * ステートメントを準備します。
+	 *
+	 * @param id
+	 * @param user_id
+	 * @param name
+	 * @param password
+	 * @return
+	 * @throws Exception
+	 */
+	protected PreparedStatement setupPstmt (String id, String user_id, String name, String password) throws Exception {
+		return null;
+	}
 
-		String query = "delete from USER where ID = ?";
+	/**
+	 * 処理を実行します。
+	 *
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 */
+	public String execute (String id, String user_id, String name, String password) throws Exception {
+
 		PreparedStatement pstmt = null;
 
+		connect();
+
 		try{
-			connect();
-
-			//PreparedStatementで事前にSQLをコンパイルする
-			pstmt = con.prepareStatement(query);
-
-			//パラメータセット
-			pstmt.setString(1, id);
+			pstmt = setupPstmt(id, user_id, name, password);
 
 			int rs = pstmt.executeUpdate();
 			//指定されたIDにデータがあった場合、正常に処理が完了したことを伝える
+			if(rs != 0){
+
+				return OK_MESSAGE;
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		} finally {
+
+			pstmt.close();
+			close();
+		}
+
+		return DELTE_MESSAGE;
+	}
+
+
+/*-------------------------------------------------
+	main() {
+		Delete delete = new Delete();
+		delete.execute();
+	}
+
+
+	class Delete extends ConnectDao {
+		/**
+		 * プリペアドステートメントを準備します。
+		 *
+		 *
+		protected PreparedStatement setupPstmt(String id) throws Exception {
+			String query = "delete from USER where ID = ?";
+			PreparedStatement pstmt = con.prepareStatement(query);
+
+			//パラメータセット
+			pstmt.setString(1, id);
+			return pstmt;
+		}
+	}
+
+
+	/**
+	 * 処理を実行します。
+	 *
+	 *
+	 * @param id
+	 * @return
+	 * @throws Exception
+	 *
+	public String execute(String id, String user_id, String name, String password) throws Exception {
+
+		PreparedStatement pstmt = null;
+
+		connect();
+
+		try{
+
+			pstmt = setupPstmt(id);
+
+			int rs = pstmt.executeUpdate();
+			//指定されたIDにデータがあった場合、正常に処理が完了したことを伝える
+			if(rs != 0){
+
+				return OK_MESSAGE;
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+//			throw e;
+
+		} finally {
+
+			pstmt.close();
+			close();
+		}
+
+		return DELTE_MESSAGE;
+	}
+
+	protected PreparedStatement setupPstmt(String id) throws Exception {
+		return null;
+	}
+
+
+ ------------------------------------------------- */
+
+
+	public String insert (String user_id, String name, String password) throws Exception {
+
+		String query = "insert into USER(USER_ID, NAME, PASSWORD) values (?, ?, ?)";
+		PreparedStatement pstmt = null;
+
+		connect();
+
+		try {
+
+			pstmt = con.prepareStatement(query);
+
+			//パラメータセット
+			pstmt.setString(1, user_id);
+			pstmt.setString(2, name);
+			pstmt.setString(3, password);
+
+			int rs = pstmt.executeUpdate();
+
+			pstmt.close();
+
 			if(rs != 0){
 
 				return OK_MESSAGE;
@@ -131,58 +271,49 @@ public class ConnectDao {
 			close();
 		}
 
-		return DELTE_MESSAGE;
-	}
+		return INSERT_MESSAGE;
 
-	public String insert (String user_id, String name, String password) throws Exception {
-
-		String query = "insert into USER(USER_ID, NAME, PASSWORD) values (?, ?, ?)";
-
-		connect();
-
-		PreparedStatement pstmt = con.prepareStatement(query);
-
-		//パラメータセット
-		pstmt.setString(1, user_id);
-		pstmt.setString(2, name);
-		pstmt.setString(3, password);
-
-		pstmt.executeUpdate();
-
-		pstmt.close();
-		close();
-
-		return OK_MESSAGE;
 	}
 
 	public String update (String id, String user_id, String name, String password) throws Exception {
 
+		String query = "update USER set USER_ID = ? , NAME = ? , PASSWORD = ? where ID = ?";
+		PreparedStatement pstmt = null;
+
 		connect();
 
-		String query = "update USER set USER_ID = ? , NAME = ? , PASSWORD = ? where ID = ?";
+		try {
+			pstmt = con.prepareStatement(query);
 
-		PreparedStatement pstmt = con.prepareStatement(query);
+			//パラメータセット
+			pstmt.setString(1, user_id);
+			pstmt.setString(2, name);
+			pstmt.setString(3, password);
+			pstmt.setString(4, id);
 
-		//パラメータセット
-		pstmt.setString(1, user_id);
-		pstmt.setString(2, name);
-		pstmt.setString(3, password);
-		pstmt.setString(4, id);
+			int rs = pstmt.executeUpdate();
 
-		int rs = pstmt.executeUpdate();
+			pstmt.close();
+			close();
 
-		pstmt.close();
-		close();
+			//指定されたIDにデータがなかった場合は更新失敗のメッセージを送る
+			if (rs != 0) {
 
-		//指定されたIDにデータがなかった場合は更新失敗のメッセージを送る
-		if (rs != 0) {
+				return OK_MESSAGE;
+			}
 
-			return OK_MESSAGE;
+		} catch (Exception e) {
 
-		} else {
+			e.printStackTrace();
+			throw e;
 
-			return DELTE_MESSAGE;
+		} finally {
+
+			pstmt.close();
+			close();
 		}
+
+		return DELTE_MESSAGE;
 	}
 }
 
