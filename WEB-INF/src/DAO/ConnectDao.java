@@ -22,6 +22,7 @@ public class ConnectDao {
 	static final String INSERT_MESSAGE = "追加できませんでした";
 	static final String UPDATE_MESSAGE = "更新できませんでした";
 	static final String OK_MESSAGE = "完了！！";
+	static final String NG_MESSAGE = "失敗！！";
 
 	//Connectionオブジェクトを格納
 	Connection con = null;
@@ -111,7 +112,7 @@ public class ConnectDao {
 			close();
 		}
 
-		return NOT_LOGIN;
+		return NG_MESSAGE;
 	}
 
 	/**
@@ -161,7 +162,7 @@ public class ConnectDao {
 			close();
 		}
 
-		return DELTE_MESSAGE;
+		return NG_MESSAGE;
 	}
 
 
@@ -237,13 +238,13 @@ public class ConnectDao {
 
 	public String insert (String user_id, String name, String password) throws Exception {
 
-		String query = "insert into USER(USER_ID, NAME, PASSWORD) values (?, ?, ?)";
 		PreparedStatement pstmt = null;
 
 		connect();
 
 		try {
 
+			String query = "insert into USER(USER_ID, NAME, PASSWORD) values (?, ?, ?)";
 			pstmt = con.prepareStatement(query);
 
 			//パラメータセット

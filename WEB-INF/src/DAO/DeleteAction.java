@@ -1,7 +1,6 @@
 package DAO;
 
 import java.sql.Connection;
-
 import Action.EditAction;
 
 public class DeleteAction extends EditAction {

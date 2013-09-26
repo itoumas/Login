@@ -10,8 +10,7 @@ public class InsertAction extends EditAction {
 
 	public String edit (String id, String user_id, String name, String password) throws Exception {
 
-		ConnectDao dao = new ConnectDao();
-		return dao.insert(user_id, name, password);
-
+		Insert dao = new Insert();
+		return dao.execute(id, user_id, name, password);
 	}
 }
