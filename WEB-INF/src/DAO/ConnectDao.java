@@ -18,11 +18,10 @@ public class ConnectDao {
 	 * メッセージ。
 	 */
 	public static final String NOT_LOGIN = "ログインできません";
-	static final String DELTE_MESSAGE = "削除できませんでした";
-	static final String INSERT_MESSAGE = "追加できませんでした";
-	static final String UPDATE_MESSAGE = "更新できませんでした";
-	static final String OK_MESSAGE = "完了！！";
-	static final String NG_MESSAGE = "失敗！！";
+	protected static final String OK_MESSAGE = "完了！！";
+//	protected static String NG_MESSAGE = "失敗！！";
+
+	protected String NG_MESSAGE;
 
 	//Connectionオブジェクトを格納
 	Connection con = null;
@@ -162,7 +161,15 @@ public class ConnectDao {
 			close();
 		}
 
+		message();
+
 		return NG_MESSAGE;
+	}
+
+	protected String message () {
+
+		return "";
+
 	}
 }
 

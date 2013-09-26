@@ -11,6 +11,14 @@ public class Delete extends ConnectDao {
 
 		//パラメータセット
 		pstmt.setString(1, id);
+
 		return pstmt;
+	}
+
+	private static final String MESSAGE = "削除できませんでした";
+
+	protected String message() {
+
+		return MESSAGE;
 	}
 }

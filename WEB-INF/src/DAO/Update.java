@@ -7,7 +7,6 @@ public class Update extends ConnectDao {
 	protected PreparedStatement setupPstmt(String id, String user_id, String name, String password) throws Exception {
 
 		String query = "update USER set USER_ID = ? , NAME = ? , PASSWORD = ? where ID = ?";
-
 		PreparedStatement pstmt = con.prepareStatement(query);
 
 		//パラメータセット
@@ -18,4 +17,12 @@ public class Update extends ConnectDao {
 
 		return pstmt;
 	}
+
+	private static final String MESSAGE = "更新できませんでした";
+
+	protected String message() {
+
+		return MESSAGE;
+	}
+
 }

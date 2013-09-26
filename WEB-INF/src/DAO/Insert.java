@@ -14,6 +14,15 @@ public class Insert extends ConnectDao {
 		pstmt.setString(2, name);
 		pstmt.setString(3, password);
 
+		NG_MESSAGE = "追加に失敗しました";
+
 		return pstmt;
+	}
+
+	private static final String MESSAGE = "追加できませんでした";
+
+	protected String message() {
+
+		return MESSAGE;
 	}
 }
