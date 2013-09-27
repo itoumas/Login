@@ -15,14 +15,16 @@
 	<%= request.getAttribute("name") %><span>さん、ようこそ！！</span>
 
 	<form method = "post" action = "http://localhost:8080/Login/edit_date">
-		<input type = "text" name = "id" /><span>ID</span><br>
-		<input type = "text" name = "user_id" /><span>ユーザID</span><br>
-		<input type = "text" name = "name" /><span>名前</span><br>
-		<input type = "text" name = "password" /><span>パスワード</span><br>
+		<input type = "text"  name = "id" /><span>ID</span><br>
+		<input type = "text"  name = "user_id" /><span>ユーザID</span><br>
+		<input type = "text"  name = "name" /><span>名前</span><br>
+		<input type = "text"  name = "password" /><span>パスワード</span><br>
 
-		<input type = "submit" value = "Delete"  name = "btn" />
-		<input type = "submit" value = "Insert"  name = "btn" />
-		<input type = "submit" value = "Update"  name = "btn" />
+		<input type = "hidden"  name = "token" value = "<%= request.getAttribute("token") %>" />
+
+		<input type = "submit"  value = "Delete"  name = "btn" />
+		<input type = "submit"  value = "Insert"  name = "btn" />
+		<input type = "submit"  value = "Update"  name = "btn" />
 	</form>
 
 	<%

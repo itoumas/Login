@@ -1,6 +1,8 @@
 package servlet;
 
 import java.io.*;
+import java.util.UUID;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -40,13 +42,18 @@ public class LoginServlet extends HttpServlet {
 
 			} else {
 
-				//ログインに成功したのでセッションを開始する
+				//ログインに成功したのでセッションを開始します。
 				HttpSession session = request.getSession(true);
 
-				//セッションにデータを格納
+				//ランダムな文字列（トークン）を作成します。
+				UUID token = UUID.randomUUID ();
+
+				//セッションにデータを格納します。
 				session.setAttribute("userName", getResponse);
+				session.setAttribute("token", token);
 
 				request.setAttribute("name", getResponse);
+				request.setAttribute("token", token);
 				response.setContentType("text/html; charset=utf-8");
 				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/Welcome.jsp");
 				rd.forward(request, response);
