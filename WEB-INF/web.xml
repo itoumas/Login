@@ -27,4 +27,16 @@
 		<url-pattern>/edit_date</url-pattern>
 	</servlet-mapping>
 
+
+
+	<servlet>
+		<servlet-name>test_servlet</servlet-name>
+		<servlet-class>servlet.TestServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>test_servlet</servlet-name>
+		<url-pattern>/test_servlet</url-pattern>
+	</servlet-mapping>
+
 </web-app>
