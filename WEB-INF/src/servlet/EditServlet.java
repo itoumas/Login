@@ -1,5 +1,7 @@
 package servlet;
 
+import java.util.UUID;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
@@ -21,8 +23,26 @@ public class EditServlet extends HttpServlet {
 			//セッションから名前を取り出す
 			HttpSession session = request.getSession(false);
 
-			//セッションが生成されていない状態で処理を行おうとした場合、ログイン画面へ飛ばす
+			//セッションが生成されていない状態で処理を行おうとした場合、ログイン画面へ飛ばします。
 			if ((session == null) || (session.getAttribute("userName") == null)) {
+
+				response.setContentType("text/html; charset=utf-8");
+				RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
+				rd.forward(request, response);
+
+				return;
+			}
+
+			//XSRF対策としてトークンが一致するか確認します。
+			Object sessionToken = session.getAttribute("token");
+			String stringToken = sessionToken.toString();
+
+			String requestToken = request.getParameter("token");
+
+			if (!(stringToken.equals(requestToken))) {
+
+				//有効なセッションを削除します。
+				session.removeAttribute("token");
 
 				response.setContentType("text/html; charset=utf-8");
 				RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
@@ -46,8 +66,13 @@ public class EditServlet extends HttpServlet {
 
 			String message = editAction.edit(id, user_id, name, password);
 
-			//セッションに保存されたユーザ名をレスポンスと送るために取り出す
+			//セッションに保存されたユーザ名をレスポンスで送るために取り出します。
 			String userName = (String)session.getAttribute("userName");
+
+			//新たなトークンを作成します。
+			UUID token = UUID.randomUUID ();
+			session.setAttribute("token", token);
+			request.setAttribute("token", token);
 
 			//処理後もとのページに戻る
 			request.setAttribute("name", userName);

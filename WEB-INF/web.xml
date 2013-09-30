@@ -17,8 +17,6 @@
 		<url-pattern>/login_servlet</url-pattern>
 	</servlet-mapping>
 
-
-
 	<servlet>
 		<servlet-name>edit_date</servlet-name>
 		<servlet-class>servlet.EditServlet</servlet-class>

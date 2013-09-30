@@ -19,7 +19,6 @@ public class ConnectDao {
 	 */
 	public static final String NOT_LOGIN = "ログインできません";
 	protected static final String OK_MESSAGE = "完了！！";
-//	protected static String NG_MESSAGE = "失敗！！";
 
 	protected String NG_MESSAGE;
 
@@ -31,12 +30,12 @@ public class ConnectDao {
 	 *
 	 * @throws Exception
 	 */
-	public void connect () throws Exception{
+	public void connect () throws Exception {
 
 		//MySQLにアクセスするためのユーザ名、パスワード、URL
 		String user = "systena";
 		String pass = "systena";
-		String url = "jdbc:mysql://10.10.14.117:3306/systenaDB?useUnicode=true&characterEncoding=UTF-8";
+		String url = "jdbc:mysql://10.10.14.228:3306/hogehoge?useUnicode=true&characterEncoding=UTF-8";
 
 		 final Logger logger = Logger.getLogger("");
 		logger.info("DAOクラス");
@@ -161,15 +160,12 @@ public class ConnectDao {
 			close();
 		}
 
-		message();
-
-		return NG_MESSAGE;
+		return NG_MESSAGE = message();
 	}
 
 	protected String message () {
 
 		return "";
-
 	}
 }
 

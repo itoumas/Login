@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.*;
+import java.security.SecureRandom;
 import java.util.UUID;
 
 import javax.servlet.RequestDispatcher;
@@ -31,11 +32,11 @@ public class LoginServlet extends HttpServlet {
 		LoginAction loginAction = new LoginAction();
 
 		try {
-			String getResponse = loginAction.userLogin(user_id, password);
+			String loginResult = loginAction.userLogin(user_id, password);
 
-			if (getResponse.equals(ConnectDao.NOT_LOGIN)) {
+			if (loginResult.equals(ConnectDao.NOT_LOGIN)) {
 
-				request.setAttribute("errerMessage", getResponse);
+				request.setAttribute("errerMessage", loginResult);
 				response.setContentType("text/html; charset=utf-8");
 				RequestDispatcher rd = sc.getRequestDispatcher("/login.jsp");
 				rd.forward(request, response);
@@ -49,10 +50,10 @@ public class LoginServlet extends HttpServlet {
 				UUID token = UUID.randomUUID ();
 
 				//セッションにデータを格納します。
-				session.setAttribute("userName", getResponse);
+				session.setAttribute("userName", loginResult);
 				session.setAttribute("token", token);
 
-				request.setAttribute("name", getResponse);
+				request.setAttribute("name", loginResult);
 				request.setAttribute("token", token);
 				response.setContentType("text/html; charset=utf-8");
 				RequestDispatcher rd = sc.getRequestDispatcher("/WEB-INF/Welcome.jsp");
