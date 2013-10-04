@@ -1,10 +1,7 @@
 package Action;
 
 import java.sql.SQLException;
-
 import DAO.ConnectDao;
-
-
 
 public class LoginAction {
 

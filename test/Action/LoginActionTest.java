@@ -12,6 +12,5 @@ public class LoginActionTest extends LoginAction {
 		LoginAction loginAction = new LoginAction();
 		assertEquals("IDとパスワードを用いてログイン", "itou",loginAction.userLogin("itou", "itou"));
 		assertEquals("IDとパスワードを用いてログイン", "ログインできません",loginAction.userLogin("aaa", "aaa"));
-
 	}
 }
