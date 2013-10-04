@@ -37,9 +37,6 @@ public class ConnectDao {
 		String pass = "systena";
 		String url = "jdbc:mysql://10.10.14.228:3306/hogehoge?useUnicode=true&characterEncoding=UTF-8";
 
-		 final Logger logger = Logger.getLogger("");
-		logger.info("DAOクラス");
-
 		try {
 			//JDBCをロード
 			Class.forName("com.mysql.jdbc.Driver");

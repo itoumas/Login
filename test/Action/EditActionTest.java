@@ -1,9 +1,35 @@
 package Action;
 
 import static org.junit.Assert.*;
+
+import java.sql.Statement;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import org.junit.Test;
 
 public class EditActionTest extends EditAction {
+
+	Connection con = null;
+
+	protected void setUp() {
+
+		String user = "systena";
+		String pass = "systena";
+		String url = "jdbc:mysql://10.10.14.228:3306/hogehoge?useUnicode=true&characterEncoding=UTF-8";
+		String tableCreateQuery = "create table TestTable(ID int primary key unique auto_increment, USER_ID varchar(20), NAME varchar(20), PASSWORD varchar(20))";
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection(url, user, pass);
+
+			Statement stmt = con.createStatement();
+			stmt.executeQuery(tableCreateQuery);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+	}
 
 	@Test
 	public void testInsert() throws Exception {
@@ -24,11 +50,15 @@ public class EditActionTest extends EditAction {
 	}
 
 	@Test
-	public void test() throws Exception {
+	public void testUpdate() throws Exception {
 
 		UpdateAction updateAction = new UpdateAction();
 
 		assertEquals("データの更新する", "完了！！", updateAction.edit("3", "systena", "systena", "systena"));
 		assertEquals("データの更新する(存在しないIDの更新)", "更新できませんでした", updateAction.edit("4", "systena", "systena", "systena"));
+	}
+
+	protected void tearDown() {
+
 	}
 }
