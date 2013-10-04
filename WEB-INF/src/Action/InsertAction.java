@@ -1,9 +1,7 @@
 package Action;
 
 import java.sql.Connection;
-
 import DAO.Insert;
-
 
 
 public class InsertAction extends EditAction {
