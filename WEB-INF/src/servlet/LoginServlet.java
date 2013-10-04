@@ -1,10 +1,6 @@
 package servlet;
 
-import java.io.*;
-import java.security.SecureRandom;
-import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.*;import java.util.UUID;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -16,6 +12,8 @@ import javax.servlet.http.HttpSession;
 
 import Action.LoginAction;
 import DAO.ConnectDao;
+
+
 
 public class LoginServlet extends HttpServlet {
 
