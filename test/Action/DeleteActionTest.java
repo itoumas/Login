@@ -1,10 +1,10 @@
-package DAO;
+package Action;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class DeleteTest extends Delete {
+public class DeleteActionTest extends DeleteAction {
 
 	@Test
 	public void test() {
