@@ -10,7 +10,8 @@ public class DeleteAction extends EditAction {
 
 	public String edit (String id, String user_id, String name, String password, String url) throws Exception {
 
-		Delete dao = new Delete(url);
-		return dao.execute(id, user_id, name, password);
+//		Delete dao = new Delete(url);
+//		return dao.execute(id, user_id, name, password);
+		return "";
 	}
 }

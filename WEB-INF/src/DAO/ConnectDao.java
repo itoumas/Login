@@ -34,6 +34,11 @@ public class ConnectDao {
 		this.url = url;
 	}
 
+	public ConnectDao() {
+
+		String url = "jdbc:mysql://10.10.14.228:3306/hogehoge?useUnicode=true&characterEncoding=UTF-8";
+	}
+
 	/**
 	 * MySQLに接続します。
 	 *
