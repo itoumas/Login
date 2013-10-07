@@ -44,7 +44,6 @@ public class ConnectDao {
 		//MySQLにアクセスするためのユーザ名、パスワード、URL
 		String user = "systena";
 		String pass = "systena";
-//		String url = "jdbc:mysql://10.10.14.228:3306/hogehoge?useUnicode=true&characterEncoding=UTF-8";
 
 		try {
 			//JDBCをロード

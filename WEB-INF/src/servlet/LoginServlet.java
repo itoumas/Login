@@ -20,6 +20,8 @@ public class LoginServlet extends HttpServlet {
 	//ログインできなかった場合の戻り値
 	public static final String NOT_LOGIN = "notLogin";
 
+	String url = "jdbc:mysql://10.10.14.228:3306/hogehoge?useUnicode=true&characterEncoding=UTF-8";
+
 	public void doPost (HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -32,7 +34,7 @@ public class LoginServlet extends HttpServlet {
 		LoginAction loginAction = new LoginAction();
 
 		try {
-			String loginResult = loginAction.userLogin(user_id, password);
+			String loginResult = loginAction.userLogin(user_id, password, url);
 
 			if (loginResult.equals(ConnectDao.NOT_LOGIN)) {
 
