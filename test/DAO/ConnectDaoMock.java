@@ -9,6 +9,12 @@ import DAO.ConnectDao;
 
 public class ConnectDaoMock extends ConnectDao {
 
+	String url  = "jdbc:mysql://10.10.14.228:3306/testDB?useUnicode=true&characterEncoding=UTF-8";
+
+	public ConnectDaoMock(String url) {
+		super(url);
+	}
+
 	//Connectionオブジェクトを格納
 	Connection con = null;
 
@@ -22,7 +28,6 @@ public class ConnectDaoMock extends ConnectDao {
 		//MySQLにアクセスするためのユーザ名、パスワード、URL
 		String user = "systena";
 		String pass = "systena";
-		String url  = "jdbc:mysql://10.10.14.228:3306/testDB?useUnicode=true&characterEncoding=UTF-8";
 		String sql  = "delete from testTBL";
 
 		try {

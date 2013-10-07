@@ -4,6 +4,10 @@ import java.sql.PreparedStatement;
 
 public class Update extends ConnectDao {
 
+	public Update(String url) {
+		super(url);
+	}
+
 	protected PreparedStatement setupPstmt(String id, String user_id, String name, String password) throws Exception {
 
 		String query = "update USER set USER_ID = ? , NAME = ? , PASSWORD = ? where ID = ?";

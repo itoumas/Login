@@ -10,7 +10,7 @@ public class InsertAction extends EditAction {
 
 	public String edit (String id, String user_id, String name, String password) throws Exception {
 
-		Insert dao = new Insert();
+		Insert dao = new Insert(super.url);
 		return dao.execute(id, user_id, name, password);
 	}
 }

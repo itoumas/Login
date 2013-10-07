@@ -4,6 +4,10 @@ import java.sql.PreparedStatement;
 
 public class Insert extends ConnectDao {
 
+	public Insert(String url) {
+		super(url);
+	}
+
 	protected PreparedStatement setupPstmt(String id, String user_id, String name, String password) throws Exception {
 
 		String query = "insert into USER(USER_ID, NAME, PASSWORD) values (?, ?, ?)";

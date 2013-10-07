@@ -8,7 +8,8 @@ import DAO.ConnectDao;
 
 public class ConnectDaoTest {
 
-	ConnectDao connectDao = new ConnectDao();
+	String url  = "jdbc:mysql://10.10.14.228:3306/testDB?useUnicode=true&characterEncoding=UTF-8";
+	ConnectDao connectDao = new ConnectDao(url);
 
 	@Test
 	public void testLogin() throws Exception {

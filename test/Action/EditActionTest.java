@@ -12,11 +12,25 @@ import DAO.ConnectDaoMock;
 public class EditActionTest extends EditAction {
 
 	Connection con = null;
+	String testUrl = "";
 
-	protected void setUp() throws Exception {
+	protected void setUp() {
 
-		ConnectDaoMock connectDaoMock = new ConnectDaoMock();
-		connectDaoMock.connect();
+		String user = "systena";
+		String pass = "systena";
+		String url = "jdbc:mysql://10.10.14.228:3306/hogehoge?useUnicode=true&characterEncoding=UTF-8";
+		String deleteQuery = "delete from testtable)";
+
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+			con = DriverManager.getConnection(url, user, pass);
+			Statement stmt = con.createStatement();
+			stmt.executeQuery(deleteQuery);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
 	}
 
 	@Test

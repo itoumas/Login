@@ -13,7 +13,7 @@ public class UpdateAction extends EditAction {
 
 	public String edit (String id, String user_id, String name, String password) throws Exception {
 
-		Update dao = new Update();
+		Update dao = new Update(super.url);
 		return dao.execute(id, user_id, name, password);
 	}
 }
