@@ -7,27 +7,16 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import org.junit.Test;
 
+import DAO.ConnectDaoMock;
+
 public class EditActionTest extends EditAction {
 
 	Connection con = null;
 
-	protected void setUp() {
+	protected void setUp() throws Exception {
 
-		String user = "systena";
-		String pass = "systena";
-		String url = "jdbc:mysql://10.10.14.228:3306/hogehoge?useUnicode=true&characterEncoding=UTF-8";
-		String deleteQuery = "delete from testtable)";
-
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection(url, user, pass);
-			Statement stmt = con.createStatement();
-			stmt.executeQuery(deleteQuery);
-
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
+		ConnectDaoMock connectDaoMock = new ConnectDaoMock();
+		connectDaoMock.connect();
 	}
 
 	@Test
@@ -60,4 +49,5 @@ public class EditActionTest extends EditAction {
 	protected void tearDown() {
 
 	}
+
 }
