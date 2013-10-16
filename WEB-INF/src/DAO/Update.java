@@ -28,8 +28,4 @@ public class Update extends ConnectDao {
 
 		return MESSAGE;
 	}
-<<<<<<< HEAD
-=======
-
->>>>>>> ba8539b9f620218559731891a1db7d8773abb637
 }

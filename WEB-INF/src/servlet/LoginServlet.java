@@ -13,21 +13,11 @@ import javax.servlet.http.HttpSession;
 import Action.LoginAction;
 import DAO.ConnectDao;
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> ba8539b9f620218559731891a1db7d8773abb637
 public class LoginServlet extends HttpServlet {
 
 	//ログインできなかった場合の戻り値
 	public static final String NOT_LOGIN = "notLogin";
 
-<<<<<<< HEAD
-=======
-	String url = "jdbc:mysql://10.10.14.228:3306/hogehoge?useUnicode=true&characterEncoding=UTF-8";
-
->>>>>>> ba8539b9f620218559731891a1db7d8773abb637
 	public void doPost (HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -40,11 +30,7 @@ public class LoginServlet extends HttpServlet {
 		LoginAction loginAction = new LoginAction();
 
 		try {
-<<<<<<< HEAD
 			String loginResult = loginAction.userLogin(user_id, password);
-=======
-			String loginResult = loginAction.userLogin(user_id, password, url);
->>>>>>> ba8539b9f620218559731891a1db7d8773abb637
 
 			if (loginResult.equals(ConnectDao.NOT_LOGIN)) {
 
