@@ -6,6 +6,7 @@ import DAO.Update;
 
 public class UpdateAction extends EditAction {
 
+<<<<<<< HEAD
 	//Connectionオブジェクトを格納します。
 	Connection con = null;
 
@@ -20,6 +21,12 @@ public class UpdateAction extends EditAction {
 	}
 
 	public String edit (String id, String user_id, String name, String password) throws Exception {
+=======
+	//Connectionオブジェクトを格納
+	Connection con = null;
+
+	public String edit (String id, String user_id, String name, String password, String url) throws Exception {
+>>>>>>> ba8539b9f620218559731891a1db7d8773abb637
 
 		Update dao = new Update(url);
 		return dao.execute(id, user_id, name, password);

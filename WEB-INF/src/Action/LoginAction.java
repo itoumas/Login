@@ -5,6 +5,7 @@ import DAO.ConnectDao;
 
 public class LoginAction {
 
+<<<<<<< HEAD
 	public String url;
 	public ConnectDao dao;
 
@@ -21,6 +22,15 @@ public class LoginAction {
 	public String userLogin(String user_id, String password) throws Exception {
 
 		try {
+=======
+	public String userLogin (String user_id, String password, String url) throws Exception {
+
+		ConnectDao dao = null;
+//		String url = "jdbc:mysql://10.10.14.228:3306/hogehoge?useUnicode=true&characterEncoding=UTF-8";
+
+		try {
+			//MySQLに接続
+>>>>>>> ba8539b9f620218559731891a1db7d8773abb637
 			dao = new ConnectDao(url);
 
 			//ID、パスワードでログイン

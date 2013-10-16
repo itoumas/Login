@@ -14,6 +14,11 @@ import Factory.Factory;
 
 public class EditServlet extends HttpServlet {
 
+<<<<<<< HEAD
+=======
+	protected String url = "jdbc:mysql://10.10.14.228:3306/hogehoge?useUnicode=true&characterEncoding=UTF-8";
+
+>>>>>>> ba8539b9f620218559731891a1db7d8773abb637
 	public void doPost(HttpServletRequest request, HttpServletResponse response) {
 
 		try
@@ -64,7 +69,11 @@ public class EditServlet extends HttpServlet {
 			Factory fact = new Factory();
 			EditAction editAction = fact.factory(btn);
 
+<<<<<<< HEAD
 			String message = editAction.edit(id, user_id, name, password);
+=======
+			String message = editAction.edit(id, user_id, name, password, url);
+>>>>>>> ba8539b9f620218559731891a1db7d8773abb637
 
 			//セッションに保存されたユーザ名をレスポンスで送るために取り出します。
 			String userName = (String)session.getAttribute("userName");

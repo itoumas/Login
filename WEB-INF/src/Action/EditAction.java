@@ -2,6 +2,7 @@ package Action;
 
 public class EditAction {
 
+<<<<<<< HEAD
 	protected String url;
 
 	/**
@@ -13,5 +14,11 @@ public class EditAction {
 
 	public String edit(String id, String user_id, String name, String password) throws Exception {
 		return "";
+=======
+	public String edit (String id, String user_id, String name, String password, String url) throws Exception {
+
+		return "";
+
+>>>>>>> ba8539b9f620218559731891a1db7d8773abb637
 	}
 }

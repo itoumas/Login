@@ -7,14 +7,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
+<<<<<<< HEAD
  * DB接続と各種DB処理を行う一般クラスです。
+=======
+ * DB接続と各種DB処理を行う一般クラス。
+>>>>>>> ba8539b9f620218559731891a1db7d8773abb637
  *
  * @author itoumas
  */
 public class ConnectDao {
 
 	/**
+<<<<<<< HEAD
 	 * メッセージです。
+=======
+	 * メッセージ。
+>>>>>>> ba8539b9f620218559731891a1db7d8773abb637
 	 */
 	public static final String NOT_LOGIN = "ログインできません";
 	protected static final String OK_MESSAGE = "完了！！";
@@ -27,8 +35,12 @@ public class ConnectDao {
 	public String url;
 
 	/**
+<<<<<<< HEAD
 	 * コンストラクタでURLを指定します。
 	 * デフォルトURLかテスト用URLのどちらかが指定されます。
+=======
+	 * コンストラクタでURLを指定
+>>>>>>> ba8539b9f620218559731891a1db7d8773abb637
 	 */
 	public ConnectDao(String url) {
 
@@ -37,7 +49,11 @@ public class ConnectDao {
 
 	public ConnectDao() {
 
+<<<<<<< HEAD
 		url = "jdbc:mysql://192.168.1.105:3306/hogehoge?useUnicode=true&characterEncoding=UTF-8";
+=======
+		String url = "jdbc:mysql://10.10.14.228:3306/hogehoge?useUnicode=true&characterEncoding=UTF-8";
+>>>>>>> ba8539b9f620218559731891a1db7d8773abb637
 	}
 
 	/**
@@ -45,11 +61,19 @@ public class ConnectDao {
 	 *
 	 * @throws Exception
 	 */
+<<<<<<< HEAD
 	public void connect() throws Exception {
 
 		//MySQLにアクセスするためのユーザ名、パスワード、URL
 		String user = "root";
 		String pass = "";
+=======
+	public void connect () throws Exception {
+
+		//MySQLにアクセスするためのユーザ名、パスワード、URL
+		String user = "systena";
+		String pass = "systena";
+>>>>>>> ba8539b9f620218559731891a1db7d8773abb637
 
 		try {
 			//JDBCをロード
@@ -68,7 +92,11 @@ public class ConnectDao {
 	/**
 	 * MySQLとの接続を切断します。
 	 */
+<<<<<<< HEAD
 	public void close() {
+=======
+	public void close () {
+>>>>>>> ba8539b9f620218559731891a1db7d8773abb637
 
 		try {
 			con.close();
@@ -87,7 +115,11 @@ public class ConnectDao {
 	 * @return
 	 * @throws Exception
 	 */
+<<<<<<< HEAD
 	public String login(String user_id, String password) throws Exception {
+=======
+	public String login (String user_id, String password) throws Exception {
+>>>>>>> ba8539b9f620218559731891a1db7d8773abb637
 
 		//プレースホルダーを指定してSQLを作成
 		String query = "select NAME from USER where USER_ID = ? and PASSWORD = ?";
@@ -133,7 +165,11 @@ public class ConnectDao {
 	 * @return
 	 * @throws Exception
 	 */
+<<<<<<< HEAD
 	protected PreparedStatement setupPstmt(String id, String user_id, String name, String password) throws Exception {
+=======
+	protected PreparedStatement setupPstmt (String id, String user_id, String name, String password) throws Exception {
+>>>>>>> ba8539b9f620218559731891a1db7d8773abb637
 
 		return null;
 	}
@@ -145,7 +181,11 @@ public class ConnectDao {
 	 * @return
 	 * @throws Exception
 	 */
+<<<<<<< HEAD
 	public String execute(String id, String user_id, String name, String password) throws Exception {
+=======
+	public String execute (String id, String user_id, String name, String password) throws Exception {
+>>>>>>> ba8539b9f620218559731891a1db7d8773abb637
 
 		PreparedStatement pstmt = null;
 
@@ -174,7 +214,11 @@ public class ConnectDao {
 		return NG_MESSAGE = message();
 	}
 
+<<<<<<< HEAD
 	protected String message() {
+=======
+	protected String message () {
+>>>>>>> ba8539b9f620218559731891a1db7d8773abb637
 
 		return "";
 	}
