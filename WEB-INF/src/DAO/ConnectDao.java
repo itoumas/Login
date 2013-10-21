@@ -37,7 +37,6 @@ public class ConnectDao {
 
 	public ConnectDao() {
 
-		url = "jdbc:mysql://192.168.1.105:3306/hogehoge?useUnicode=true&characterEncoding=UTF-8";
 	}
 
 	/**

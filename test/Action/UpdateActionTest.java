@@ -5,8 +5,10 @@ import static org.junit.Assert.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -45,14 +47,31 @@ public class UpdateActionTest {
 
 		assertEquals("データの更新する", "完了！！", updateAction.edit("1", "itou_id", "itou_name", "itou_pass"));
 
-		assertEquals("データの更新する(存在しないIDの更新)", "更新できませんでした", updateAction.edit("2", "systena", "systena", "systena"));
-		assertEquals("データの更新する(IDの未指定)", "更新できませんでした", updateAction.edit("", "systena", "systena", "systena"));
-
 		ResultSet rs = stmt.executeQuery("select * from USER where ID = 1");
 		rs.next();
-
 		assertEquals("UpdateしたデータがDBに存在するか", "itou_id",   rs.getString("USER_ID"));
 		assertEquals("UpdateしたデータがDBに存在するか", "itou_name", rs.getString("NAME"));
 		assertEquals("UpdateしたデータがDBに存在するか", "itou_pass", rs.getString("PASSWORD"));
+
+		assertEquals("データの更新する(存在しないIDの更新)", "更新できませんでした", updateAction.edit("2", "systena", "systena", "systena"));
+
+		assertEquals("データがUpdateしていないか", "itou_id",   rs.getString("USER_ID"));
+		assertEquals("データがUpdateしていないか", "itou_name", rs.getString("NAME"));
+		assertEquals("データがUpdateしていないか", "itou_pass", rs.getString("PASSWORD"));
+
+		assertEquals("データの更新する(IDの未指定)", "更新できませんでした", updateAction.edit("", "systena", "systena", "systena"));
+
+		assertEquals("データがUpdateしていないか", "itou_id",   rs.getString("USER_ID"));
+		assertEquals("データがUpdateしていないか", "itou_name", rs.getString("NAME"));
+		assertEquals("データがUpdateしていないか", "itou_pass", rs.getString("PASSWORD"));
+
+		assertEquals("データの件数が変わっていないかどうか", false, rs.next());
+	}
+
+	@After
+	public void teatDown() throws SQLException {
+
+		stmt.close();
+		con.close();
 	}
 }

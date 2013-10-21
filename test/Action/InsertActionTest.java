@@ -5,8 +5,10 @@ import static org.junit.Assert.assertEquals;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -56,5 +58,12 @@ public class InsertActionTest {
 		assertEquals("データが登録されていないか", "1",  rs.getString("cnt"));
  */
 
+	}
+
+	@After
+	public void teatDown() throws SQLException {
+
+		stmt.close();
+		con.close();
 	}
 }

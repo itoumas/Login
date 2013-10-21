@@ -21,5 +21,4 @@ public class LoginServletTest {
 	    LoginServlet servlet = new LoginServlet();
 	    servlet.doPost(request, response);
 	}
-
 }
