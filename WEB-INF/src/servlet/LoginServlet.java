@@ -25,6 +25,8 @@ public class LoginServlet extends HttpServlet {
 		String user_id = request.getParameter("user_id");
 		String password = request.getParameter("password");
 
+		System.out.println("ユーザID:" + user_id + "  パスワード:" + password);
+
 		ServletContext sc = getServletContext();
 
 		LoginAction loginAction = new LoginAction();
