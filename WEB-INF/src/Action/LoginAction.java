@@ -10,7 +10,7 @@ public class LoginAction {
 
 	public LoginAction() {
 
-		url = "jdbc:mysql://192.168.1.105:3306/hogehoge?useUnicode=true&characterEncoding=UTF-8";
+		url = "jdbc:mysql://localhost:3306/hogehoge?useUnicode=true&characterEncoding=UTF-8";
 	}
 
 	public LoginAction(String url) {

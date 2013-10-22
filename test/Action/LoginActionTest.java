@@ -64,5 +64,4 @@ public class LoginActionTest extends LoginAction {
 		stmt.close();
 		con.close();
 	}
-
 }
