@@ -14,8 +14,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import Action.EditAction;
-
 import static org.mockito.Mockito.*;
 
 
@@ -152,10 +150,13 @@ public class EditServletTest extends EditServlet {
 		verify(servletContext).getRequestDispatcher("/login.jsp");
 		verify(request).getSession(false);
 		verify(session).getAttribute("userName");
+		verify(session).removeAttribute("token");
 		verify(requestDispatcher).forward(request, response);
 
 		//responseにsetContentTypeが行われているかの検証をします。
 		assertEquals("text/html; charset=utf-8", response.getContentType());
+
+		assertEquals("serverToken", session.getAttribute("token"));
 	}
 
 
@@ -183,14 +184,16 @@ public class EditServletTest extends EditServlet {
 		//getRequestDispatcherメソッドが呼び出されたら強制的にrequestDispatcherを返します。
 		doReturn(requestDispatcher).when(servletContext).getRequestDispatcher("/WEB-INF/Welcome.jsp");
 
-		doReturn("").when(request).getParameter("id");
-		doReturn("").when(request).getParameter("user_id");
-		doReturn("").when(request).getParameter("name");
-		doReturn("").when(request).getParameter("password");
-		doReturn("Delete").when(request).getParameter("btn");
+		//getAttribute("name")が呼び出されたら強制的に"testName"を返します。
+		//requestにuserNameがセットされたかの検証に使用します。
+		doReturn("testName").when(session).getAttribute("userName");
 
-		EditAction editAction = mock(EditAction.class);
-		doReturn("").when(editAction).edit("", "", "", "");
+		//リクエストにデータをセットします。
+		doReturn("").when(request).getParameter("id");
+		doReturn("test_id").when(request).getParameter("user_id");
+		doReturn("test_name").when(request).getParameter("name");
+		doReturn("test_pass").when(request).getParameter("password");
+		doReturn("Delete").when(request).getParameter("btn");
 
 		//doPostを実行します。
 		editServlet.doPost(request, response);
@@ -198,7 +201,8 @@ public class EditServletTest extends EditServlet {
 		//モックメソッドが実行されたか検証します。
 		verify(servletContext).getRequestDispatcher("/WEB-INF/Welcome.jsp");
 		verify(request).getSession(false);
-		verify(session).getAttribute("userName");
+		verify(request).setAttribute("name", "testName");
+		verify(request).setAttribute("message", "削除できませんでした");
 		verify(requestDispatcher).forward(request, response);
 
 		//responseにsetContentTypeが行われているかの検証をします。
