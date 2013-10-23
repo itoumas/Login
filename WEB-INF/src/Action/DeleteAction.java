@@ -8,8 +8,6 @@ public class DeleteAction extends EditAction {
 	//Connectionオブジェクトを格納します。
 	Connection con = null;
 
-	public String url;
-
 	public DeleteAction(String url) {
 		this.url = url;
 	}

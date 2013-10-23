@@ -15,7 +15,6 @@ import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 import Action.EditAction;
-import Factory.Factory;
 
 import static org.mockito.Mockito.*;
 
@@ -164,7 +163,6 @@ public class EditServletTest extends EditServlet {
 	 * tokenが一致した場合のテストです。
 	 * @throws Exception
 	 */
-	/*
 	@Test
 	public void doPostSuccess() throws Exception {
 
@@ -185,27 +183,14 @@ public class EditServletTest extends EditServlet {
 		//getRequestDispatcherメソッドが呼び出されたら強制的にrequestDispatcherを返します。
 		doReturn(requestDispatcher).when(servletContext).getRequestDispatcher("/WEB-INF/Welcome.jsp");
 
-//		Factory fact = mock(Factory.class);
-
-//		EditAction editAction = mock(EditAction.class);
-
-		String btn = null;
-		String id = null;
-		String user_id = null;
-		String name = null;
-		String password = null;
-
-//		doReturn(editAction).when(fact).factory(btn);
-//		doReturn("testMessage").when(editAction).edit(id, user_id, name, password);
-
 		doReturn("").when(request).getParameter("id");
 		doReturn("").when(request).getParameter("user_id");
 		doReturn("").when(request).getParameter("name");
 		doReturn("").when(request).getParameter("password");
-		doReturn("").when(request).getParameter("btn");
+		doReturn("Delete").when(request).getParameter("btn");
 
 		EditAction editAction = mock(EditAction.class);
-		doReturn("").when(editAction).edit(id, user_id, name, password);
+		doReturn("").when(editAction).edit("", "", "", "");
 
 		//doPostを実行します。
 		editServlet.doPost(request, response);
@@ -215,9 +200,8 @@ public class EditServletTest extends EditServlet {
 		verify(request).getSession(false);
 		verify(session).getAttribute("userName");
 		verify(requestDispatcher).forward(request, response);
-//		verify(fact).factory(btn);
 
 		//responseにsetContentTypeが行われているかの検証をします。
 		assertEquals("text/html; charset=utf-8", response.getContentType());
-	}*/
+	}
 }

@@ -63,7 +63,7 @@ public class EditServlet extends HttpServlet {
 			//DBの操作を行う(ビジネスロジック)
 			Factory fact = new Factory();
 			EditAction editAction = fact.factory(btn);
-System.out.println("aaa");
+
 			String message = editAction.edit(id, user_id, name, password);
 
 			//セッションに保存されたユーザ名をレスポンスで送るために取り出します。
