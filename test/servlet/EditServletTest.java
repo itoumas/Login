@@ -12,7 +12,13 @@ import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.springframework.mock.web.MockHttpServletResponse;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+import Factory.Factory;
 
 import static org.mockito.Mockito.*;
 
@@ -24,6 +30,10 @@ import static org.mockito.Mockito.*;
  * @author itoumas
  *
  */
+//PowerMockを利用する宣言をします。
+//PowerMockクラスを呼び出すEditServletクラスを宣言します。
+//@RunWith(PowerMockRunner.class)
+@PrepareForTest(EditServlet.class)
 public class EditServletTest extends EditServlet {
 
 
@@ -179,7 +189,7 @@ public class EditServletTest extends EditServlet {
 
 		//リクエストで送られてきたテスト用tokenを返します。
 		//セッション側のtokenとは一致しません。
-		doReturn("testToken").when(request).getParameter("token"); //セッション側tokenと一致させるとテスト失敗
+		doReturn("testToken").when(request).getParameter("token"); //セッション側tokenと一致させないとテスト失敗
 
 		//getRequestDispatcherメソッドが呼び出されたら強制的にrequestDispatcherを返します。
 		doReturn(requestDispatcher).when(servletContext).getRequestDispatcher("/WEB-INF/Welcome.jsp");
@@ -194,6 +204,16 @@ public class EditServletTest extends EditServlet {
 		doReturn("test_name").when(request).getParameter("name");
 		doReturn("test_pass").when(request).getParameter("password");
 		doReturn("Delete").when(request).getParameter("btn");
+
+//		EditAction editAction = mock(EditAction.class);
+
+//		doReturn(editAction).when(fact).factory(anyString());
+//		doReturn("testMessage").when(editAction).edit(anyString(), anyString(), anyString(), anyString());
+
+		//Factoryクラスのモックオブジェクトを作成します。
+		Factory fact = mock(Factory.class);
+		//Factoryクラスがnewされた際にFactoryクラスのコンストラクタにmockを送ります。
+		PowerMockito.whenNew(Factory.class).withAnyArguments().thenReturn(fact);
 
 		//doPostを実行します。
 		editServlet.doPost(request, response);
