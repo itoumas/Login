@@ -74,7 +74,8 @@ public class FactoryTest {
 
 		try {
 
-			fact.factory("Error");
+			//誤った引数をFactoryに対して送ります。
+			fact.factory("Error");		//正しい引数を送った場合はテスト失敗
 
 			//factoryメソッドを実行してエラーが発生しなかった場合はテストを失敗させます。
 			fail();
