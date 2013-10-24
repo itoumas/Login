@@ -34,9 +34,10 @@ public class FactoryTest {
 
 	/**
 	 * "Delete"が引数である場合です。。
+	 * @throws WrongArgumentException
 	 */
 	@Test
-	public void testFactoryOfDelete() {
+	public void testFactoryOfDelete() throws WrongArgumentException {
 
 		assertTrue("DeleteActionオブジェクトが返ってくるか", fact.factory("Delete") instanceof DeleteAction);
 	}
@@ -44,9 +45,10 @@ public class FactoryTest {
 
 	/**
 	 * "Insert"が引数である場合です。
+	 * @throws WrongArgumentException
 	 */
 	@Test
-	public void testFactoryOfInsert() {
+	public void testFactoryOfInsert() throws WrongArgumentException {
 
 		assertTrue("InsertActionオブジェクトが返ってくるか", fact.factory("Insert") instanceof InsertAction);
 	}
@@ -54,9 +56,10 @@ public class FactoryTest {
 
 	/**
 	 * "Update"が引数である場合です。
+	 * @throws WrongArgumentException
 	 */
 	@Test
-	public void testFactoryOfUpdate() {
+	public void testFactoryOfUpdate() throws WrongArgumentException {
 
 		assertTrue("UpdateActionオブジェクトが返ってくるか", fact.factory("Update") instanceof UpdateAction);
 	}
@@ -64,11 +67,24 @@ public class FactoryTest {
 
 	/**
 	 * その他の引数である場合です。
+	 * @throws WrongArgumentException
 	 */
 	@Test
-	public void testFactory() {
+	public void testFactoryException() {
 
-		assertTrue("DeleteActionオブジェクトが返ってくるか", fact.factory("Nothing") instanceof DeleteAction);
+		try {
+
+			fact.factory("Error");
+
+			//factoryメソッドを実行してエラーが発生しなかった場合はテストを失敗させます。
+			fail();
+
+		} catch (WrongArgumentException e) {
+
+			//独自の例外が発生した場合はテスト成功
+			assertTrue(true);
+
+		}
 	}
 
 	//各メソッドにおいて引数を変更するとテスト失敗

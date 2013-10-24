@@ -8,7 +8,7 @@ import Action.UpdateAction;
 
 public class Factory {
 
-	public EditAction factory(String type) {
+	public EditAction factory(String type) throws WrongArgumentException {
 
 		if (type.equals("Delete")) {
 
@@ -25,6 +25,6 @@ public class Factory {
 			return new UpdateAction();
 		}
 
-		return new DeleteAction();
+		throw new WrongArgumentException();
 	}
 }
